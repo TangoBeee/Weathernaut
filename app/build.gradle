@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'me.tangobee.weathernaut'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "me.tangobee.weathernaut"
@@ -49,4 +49,15 @@ dependencies {
 
     //Splash Screen API
     implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    //Navigation Component Lib
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.2")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
+
+    //ViewPager Indicator Lib
+    implementation "com.tbuonomo:dotsindicator:4.3"
+
+    //Responsive UI Lib
+    implementation 'com.intuit.ssp:ssp-android:1.1.0'
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
 }
