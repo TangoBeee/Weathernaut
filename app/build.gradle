@@ -60,4 +60,7 @@ dependencies {
     //Responsive UI Lib
     implementation 'com.intuit.ssp:ssp-android:1.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+    //Custom Switch Lib
+    implementation 'io.github.bitvale:switcher:1.1.2'
 }
