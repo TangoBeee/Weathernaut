@@ -211,6 +211,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:paddingVertical="@dimen/_15sdp"
                     android:paddingHorizontal="@dimen/_20sdp"
                     android:weightSum="1">
@@ -291,6 +292,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:paddingVertical="@dimen/_15sdp"
                     android:paddingHorizontal="@dimen/_20sdp" />
 
