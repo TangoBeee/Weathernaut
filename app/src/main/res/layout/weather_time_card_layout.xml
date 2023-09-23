@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/smallWeatherCardParent"
+    android:background="@drawable/weather_time_column_style"
+    android:padding="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp">
+
+    <TextView
+        android:id="@+id/weatherTime"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="wrap_content"
+        android:text="13:00"
+        android:textAlignment="center"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/upcomingTimeColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:0.6"
+        android:src="@drawable/icon_weather_sun"
+        android:layout_marginVertical="@dimen/_5sdp"
+        app:layout_constraintTop_toBottomOf="@+id/weatherTime"
+        app:layout_constraintBottom_toTopOf="@id/weatherValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/weatherValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21 °"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/textColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

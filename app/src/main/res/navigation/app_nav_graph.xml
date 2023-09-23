@@ -9,5 +9,8 @@
         android:id="@+id/homeFragment"
         android:name="me.tangobee.weathernaut.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+    </fragment>
+
+
 </navigation>

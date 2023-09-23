@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SearchActivity"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:padding="@dimen/_20sdp">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchCity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        android:background="@drawable/search_location_view_style"
+        android:theme="@style/AppSearchView"
+        app:queryBackground="@null"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cancelSearch" />
+
+    <TextView
+        android:id="@+id/cancelSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="@id/searchCity"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

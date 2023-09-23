@@ -1,8 +1,9 @@
-package me.tangobee.weathernaut
+package me.tangobee.weathernaut.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import me.tangobee.weathernaut.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,8 +12,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
     }
 
 }
