@@ -20,7 +20,9 @@
         android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/cancelSearch" />
+        app:layout_constraintEnd_toStartOf="@id/cancelSearch">
+        <requestFocus />
+    </androidx.appcompat.widget.SearchView>
 
     <TextView
         android:id="@+id/cancelSearch"
