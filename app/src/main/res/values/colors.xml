@@ -10,4 +10,5 @@
 
     <color name="textColor">#313341</color>
     <color name="upcomingTimeColor">#9C9EAA</color>
+    <color name="defaultColor">#808080</color>
 </resources>

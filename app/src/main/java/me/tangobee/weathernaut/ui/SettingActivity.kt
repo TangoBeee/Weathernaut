@@ -15,6 +15,7 @@ class SettingActivity : AppCompatActivity() {
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.soundEffect.setOnClickListener { binding.soundEffectSwitch.setChecked(!binding.soundEffectSwitch.isChecked) }
         setStatusBarColor()
 
         binding.back.setOnClickListener {onBackPressedDispatcher.onBackPressed()}

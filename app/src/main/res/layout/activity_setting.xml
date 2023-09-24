@@ -107,14 +107,19 @@
                         android:textSize="@dimen/_13ssp"
                         android:layout_weight="1"/>
 
-                    <Spinner
-                        android:id="@+id/spinner"
+                    <TextView
+                        android:id="@+id/temperatureSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/icon_dropdown"
+                        app:drawableTint="@color/defaultColor"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:text="@string/celsius"
+                        android:textColor="@color/defaultColor"
+                        android:fontFamily="@font/inter"
                         android:layout_weight="1"
-                        android:textAlignment="viewEnd"
-                        android:focusable="false"
-                        android:clickable="false" />
+                        android:layout_gravity="center"
+                        android:gravity="center|end" />
                 </LinearLayout>
 
 
@@ -138,11 +143,19 @@
                         android:textSize="@dimen/_13ssp"
                         android:layout_weight="1"/>
 
-                    <Spinner
+                    <TextView
+                        android:id="@+id/windSpeedSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/icon_dropdown"
+                        app:drawableTint="@color/defaultColor"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:text="@string/beaufort_scale"
+                        android:textColor="@color/defaultColor"
+                        android:fontFamily="@font/inter"
                         android:layout_weight="1"
-                        android:textAlignment="viewEnd"/>
+                        android:layout_gravity="center"
+                        android:gravity="center|end" />
                 </LinearLayout>
 
 
@@ -166,11 +179,19 @@
                         android:textSize="@dimen/_13ssp"
                         android:layout_weight="1"/>
 
-                    <Spinner
+                    <TextView
+                        android:id="@+id/rainFallSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:drawableEndCompat="@drawable/icon_dropdown"
+                        app:drawableTint="@color/defaultColor"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:text="@string/centimeters"
+                        android:textColor="@color/defaultColor"
+                        android:fontFamily="@font/inter"
                         android:layout_weight="1"
-                        android:textAlignment="viewEnd" />
+                        android:layout_gravity="center"
+                        android:gravity="center|end" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -239,6 +260,7 @@
                     </LinearLayout>
 
                     <com.bitvale.switcher.SwitcherX
+                        android:id="@+id/soundEffectSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"

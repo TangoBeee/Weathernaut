@@ -39,4 +39,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="sound_effect_descp">Accompany weather changes by sound effects</string>
     <string name="cancel">Cancel</string>
+    <string name="beaufort_scale">Beaufort Scale</string>
+    <string name="centimeters">Centimeters</string>
 </resources>
