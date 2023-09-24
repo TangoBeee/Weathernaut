@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/beaufort"
+        android:title="@string/beaufort_scale"/>
+
+    <item
+        android:id="@+id/kilometers"
+        android:title="@string/kilometers_per_hour"/>
+
+    <item
+        android:id="@+id/meters"
+        android:title="@string/meters_per_second"/>
+
+    <item
+        android:id="@+id/miles"
+        android:title="@string/miles_per_hour"/>
+
+</menu>

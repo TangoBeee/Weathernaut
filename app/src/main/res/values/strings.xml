@@ -41,4 +41,9 @@
     <string name="cancel">Cancel</string>
     <string name="beaufort_scale">Beaufort Scale</string>
     <string name="centimeters">Centimeters</string>
+    <string name="kilometers_per_hour">Kilometers per hour</string>
+    <string name="meters_per_second">Meters per second</string>
+    <string name="miles_per_hour">Miles per hour</string>
+    <string name="millimeters">Millimeters</string>
+    <string name="inches">Inches</string>
 </resources>
