@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        addSampleData()
         setHorizontalWeatherViewAdapter()
 
         binding.settings.setOnClickListener { moveToSettings() }
@@ -56,6 +57,10 @@ class HomeFragment : Fragment() {
         binding.tomorrow.setTextColor(Color.parseColor("#D6996B"))
 
         changeIndicatorDotPosition(R.id.today)
+
+        //Adding Today's Weather Data in array and adapter
+        addSampleData()
+        setHorizontalWeatherViewAdapter()
     }
 
     private fun changeWeatherToTomorrow() {
@@ -69,6 +74,10 @@ class HomeFragment : Fragment() {
         binding.today.setTextColor(Color.parseColor("#D6996B"))
 
         changeIndicatorDotPosition(R.id.tomorrow)
+
+        //Adding Tomorrow's Weather Data in array and adapter
+        addSampleData1()
+        setHorizontalWeatherViewAdapter()
     }
 
     private fun changeIndicatorDotPosition(viewId: Int) {
@@ -80,12 +89,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setHorizontalWeatherViewAdapter() {
-        binding.smallWeatherCardView.setHasFixedSize(true)
         binding.smallWeatherCardView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-
-        weatherCardData = ArrayList()
-
-        addSampleData()
 
         val adapter = HorizontalWeatherAdapter(weatherCardData)
         binding.smallWeatherCardView.adapter = adapter
@@ -108,6 +112,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun addSampleData() {
+        weatherCardData = ArrayList()
         weatherCardData.add(WeatherTimeCardData("11:00", R.drawable.icon_weather_cloud, "20°", false))
         weatherCardData.add(WeatherTimeCardData("12:00", R.drawable.icon_weather_cloud_sun, "19°", false))
         weatherCardData.add(WeatherTimeCardData("13:00", R.drawable.icon_weather_sun, "21°", false))
@@ -116,6 +121,19 @@ class HomeFragment : Fragment() {
         weatherCardData.add(WeatherTimeCardData("16:00", R.drawable.icon_weather_cloud, "19°", true))
         weatherCardData.add(WeatherTimeCardData("17:00", R.drawable.icon_weather_rain_cloud, "17°", false))
         weatherCardData.add(WeatherTimeCardData("18:00", R.drawable.icon_weather_cloud_sun, "20°", false))
+    }
+
+
+    private fun addSampleData1() {
+        weatherCardData = ArrayList()
+        weatherCardData.add(WeatherTimeCardData("02:00", R.drawable.icon_weather_rain_cloud, "16°", false))
+        weatherCardData.add(WeatherTimeCardData("03:00", R.drawable.icon_weather_rain_cloud, "14°", false))
+        weatherCardData.add(WeatherTimeCardData("04:00", R.drawable.icon_weather_cloud_sun, "20°", false))
+        weatherCardData.add(WeatherTimeCardData("05:00", R.drawable.icon_weather_cloud, "19°", false))
+        weatherCardData.add(WeatherTimeCardData("06:00", R.drawable.icon_weather_sun, "21°", false))
+        weatherCardData.add(WeatherTimeCardData("07:00", R.drawable.icon_weather_cloud, "18°", false))
+        weatherCardData.add(WeatherTimeCardData("08:00", R.drawable.icon_weather_rain_cloud, "17°", false))
+        weatherCardData.add(WeatherTimeCardData("09:00", R.drawable.icon_weather_sun_rain_cloud, "20°", false))
     }
 
 }

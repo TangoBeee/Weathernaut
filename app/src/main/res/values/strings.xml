@@ -16,8 +16,8 @@
     <string name="dummyRainFall">3cm</string>
     <string name="wind">Wind</string>
     <string name="dummyWindSpeed">19km/h</string>
-    <string name="drop">Drop</string>
-    <string name="dummyDropSize">3cm</string>
+    <string name="humidity">Humidity</string>
+    <string name="dummyHumiditySize">64%</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="next_7_days">Next 7 Days</string>
