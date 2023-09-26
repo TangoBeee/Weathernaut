@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.UpcomingDaysFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="0dp"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_back"
+                android:backgroundTint="@android:color/transparent"
+                android:contentDescription="@string/back_button"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/next_7_days"
+                android:fontFamily="@font/inter"
+                android:textSize="@dimen/_18ssp"
+                android:textColor="@color/textColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/back"
+                app:layout_constraintBottom_toBottomOf="@id/back" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tomorrowDayLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/next_day_box_style"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="@string/tomorrow"
+                    android:textColor="@color/textColor"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tomorrowWeatherIcon"
+                    app:layout_constraintBottom_toBottomOf="@+id/tomorrowWeatherIcon"/>
+
+                <TextView
+                    android:id="@+id/tomorrowWeatherValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="22 °"
+                    android:fontFamily="@font/inter_bold"
+                    android:textColor="@color/textColor"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:layout_constraintEnd_toStartOf="@+id/tomorrowWeatherIcon"
+                    app:layout_constraintTop_toTopOf="@+id/tomorrowWeatherIcon"
+                    app:layout_constraintBottom_toBottomOf="@+id/tomorrowWeatherIcon" />
+
+                <ImageView
+                    android:id="@+id/tomorrowWeatherIcon"
+                    android:layout_width="@dimen/_33sdp"
+                    android:layout_height="@dimen/_33sdp"
+                    android:src="@drawable/icon_weather_cloud_sun"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/tomorrow_weather_icon" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:padding="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@id/tomorrowWeatherIcon">
+
+                    <ImageView
+                        android:id="@+id/umbrellaIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_umbrella"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/windIcon"
+                        app:layout_constraintTop_toTopOf="@id/windIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/windIcon"
+                        android:contentDescription="@string/tomorrow_rainfall_size" />
+
+                    <TextView
+                        android:id="@+id/tomorrowRainFall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 cm"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/inter_semibold"
+                        app:layout_constraintTop_toBottomOf="@id/umbrellaIcon"
+                        app:layout_constraintStart_toStartOf="@id/umbrellaIcon"
+                        app:layout_constraintEnd_toEndOf="@id/umbrellaIcon" />
+
+                    <ImageView
+                        android:id="@+id/windIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_wind"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/tomorrow_wind_speed" />
+
+                    <TextView
+                        android:id="@+id/tomorrowWindSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="15 km/h"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/inter_semibold"
+                        app:layout_constraintTop_toBottomOf="@id/windIcon"
+                        app:layout_constraintStart_toStartOf="@id/windIcon"
+                        app:layout_constraintEnd_toEndOf="@id/windIcon" />
+
+                    <ImageView
+                        android:id="@+id/dropIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_drop"
+                        app:layout_constraintStart_toEndOf="@id/windIcon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/windIcon"
+                        app:layout_constraintBottom_toBottomOf="@id/windIcon"
+                        android:contentDescription="@string/tomorrow_humidity" />
+
+                    <TextView
+                        android:id="@+id/tomorrowHumidity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="50%"
+                        android:textColor="@color/textColor"
+                        android:fontFamily="@font/inter_semibold"
+                        app:layout_constraintTop_toBottomOf="@id/dropIcon"
+                        app:layout_constraintStart_toStartOf="@id/dropIcon"
+                        app:layout_constraintEnd_toEndOf="@id/dropIcon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <LinearLayout
+                android:id="@+id/otherDaysLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tomorrowDayLayout"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/_20sdp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather1Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/thursday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather1Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather1Icon" />
+
+                    <TextView
+                        android:id="@+id/weather1Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="21 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather1Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather1Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather1Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather1Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_sun"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_1_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_marginVertical="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather2Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/friday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather2Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather2Icon" />
+
+                    <TextView
+                        android:id="@+id/weather2Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather2Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather2Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather2Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather2Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_sun"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_2_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather3Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/saturday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather3Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather3Icon" />
+
+                    <TextView
+                        android:id="@+id/weather3Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="18 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather3Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather3Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather3Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather3Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_cloud_sun"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_3_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_marginVertical="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather4Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sunday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather4Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather4Icon" />
+
+                    <TextView
+                        android:id="@+id/weather4Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather4Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather4Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather4Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather4Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_cloud"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_4_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather5Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/monday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather5Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather5Icon" />
+
+                    <TextView
+                        android:id="@+id/weather5Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="16 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather5Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather5Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather5Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather5Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_rain_cloud"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_5_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/weather_data_row_style"
+                    android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp">
+
+                    <TextView
+                        android:id="@+id/weather6Day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tuesday"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/weather6Icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/weather6Icon" />
+
+                    <TextView
+                        android:id="@+id/weather6Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="18 °"
+                        android:fontFamily="@font/inter_bold"
+                        android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        app:layout_constraintBottom_toBottomOf="@id/weather6Icon"
+                        app:layout_constraintEnd_toStartOf="@id/weather6Icon"
+                        app:layout_constraintTop_toTopOf="@id/weather6Icon" />
+
+                    <ImageView
+                        android:id="@+id/weather6Icon"
+                        android:layout_width="@dimen/_24sdp"
+                        android:layout_height="@dimen/_24sdp"
+                        android:src="@drawable/icon_weather_rain_cloud"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:contentDescription="@string/day_6_weather_icon" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

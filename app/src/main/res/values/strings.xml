@@ -46,4 +46,21 @@
     <string name="miles_per_hour">Miles per hour</string>
     <string name="millimeters">Millimeters</string>
     <string name="inches">Inches</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="tomorrow_weather_icon">Tomorrow Weather Icon</string>
+    <string name="tomorrow_rainfall_size">Tomorrow RainFall Size</string>
+    <string name="tomorrow_wind_speed">Tomorrow Wind Speed</string>
+    <string name="tomorrow_humidity">Tomorrow Humidity</string>
+    <string name="day_1_weather_icon">Day 1 Weather Icon</string>
+    <string name="day_2_weather_icon">Day 2 Weather Icon</string>
+    <string name="day_3_weather_icon">Day 3 Weather Icon</string>
+    <string name="day_4_weather_icon">Day 4 Weather Icon</string>
+    <string name="day_5_weather_icon">Day 5 Weather Icon</string>
+    <string name="day_6_weather_icon">Day 6 Weather Icon</string>
 </resources>
