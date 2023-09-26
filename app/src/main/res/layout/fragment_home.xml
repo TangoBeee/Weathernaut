@@ -8,6 +8,7 @@
     android:scrollbarSize="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_20sdp">
@@ -294,7 +295,7 @@
             android:drawablePadding="@dimen/_10sdp"
             android:gravity="center"
             android:text="@string/next_7_days"
-            android:textColor="#D6996B"
+            android:textColor="#4B4B4B"
             android:fontFamily="@font/inter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tomorrow"
@@ -307,6 +308,16 @@
             android:background="#E2A272"
             android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintTop_toBottomOf="@id/today"/>
+
+        <View
+            android:id="@+id/indicator"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_5sdp"
+            android:background="@drawable/indicator_dot_style"
+            app:layout_constraintStart_toStartOf="@id/today"
+            app:layout_constraintEnd_toEndOf="@id/today"
+            app:layout_constraintTop_toTopOf="@id/separator"
+            app:layout_constraintBottom_toBottomOf="@id/separator"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

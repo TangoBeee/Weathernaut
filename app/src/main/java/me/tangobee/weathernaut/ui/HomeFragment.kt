@@ -1,11 +1,15 @@
 package me.tangobee.weathernaut.ui
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.tangobee.weathernaut.R
@@ -37,6 +41,42 @@ class HomeFragment : Fragment() {
         binding.settings.setOnClickListener { moveToSettings() }
         binding.search.setOnClickListener {moveToSearch()}
         binding.next7days.setOnClickListener { navToUpcomingDaysFrag() }
+        binding.today.setOnClickListener { changeWeatherToToday() }
+        binding.tomorrow.setOnClickListener { changeWeatherToTomorrow() }
+    }
+
+    private fun changeWeatherToToday() {
+        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter_bold)
+        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter)
+
+        binding.today.typeface = todayTypeface
+        binding.tomorrow.typeface = tomorrowTypeface
+
+        binding.today.setTextColor(requireActivity().getColor(R.color.textColor))
+        binding.tomorrow.setTextColor(Color.parseColor("#D6996B"))
+
+        changeIndicatorDotPosition(R.id.today)
+    }
+
+    private fun changeWeatherToTomorrow() {
+        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter_bold)
+        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter)
+
+        binding.tomorrow.typeface = tomorrowTypeface
+        binding.today.typeface = todayTypeface
+
+        binding.tomorrow.setTextColor(requireActivity().getColor(R.color.textColor))
+        binding.today.setTextColor(Color.parseColor("#D6996B"))
+
+        changeIndicatorDotPosition(R.id.tomorrow)
+    }
+
+    private fun changeIndicatorDotPosition(viewId: Int) {
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(binding.parentLayout)
+        constraintSet.connect(R.id.indicator, ConstraintSet.START, viewId, ConstraintSet.START, 0)
+        constraintSet.connect(R.id.indicator, ConstraintSet.END, viewId, ConstraintSet.END, 0)
+        constraintSet.applyTo(binding.parentLayout)
     }
 
     private fun setHorizontalWeatherViewAdapter() {
