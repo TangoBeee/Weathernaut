@@ -12,6 +12,7 @@ import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.HorizontalWeatherAdapter
 import me.tangobee.weathernaut.databinding.FragmentHomeBinding
 import me.tangobee.weathernaut.model.WeatherTimeCardData
+import me.tangobee.weathernaut.util.NavigateFragmentUtil
 
 class HomeFragment : Fragment() {
 
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
 
         binding.settings.setOnClickListener { moveToSettings() }
         binding.search.setOnClickListener {moveToSearch()}
+        binding.next7days.setOnClickListener { navToUpcomingDaysFrag() }
     }
 
     private fun setHorizontalWeatherViewAdapter() {
@@ -58,6 +60,11 @@ class HomeFragment : Fragment() {
         val intent = Intent(requireContext(), SearchActivity::class.java)
         startActivity(intent)
         requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+    }
+
+    private fun navToUpcomingDaysFrag() {
+        val navHelper = NavigateFragmentUtil()
+        navHelper.navigateToFragment(requireView(), R.id.nav_homeFrag_to_upcomingDaysFrag)
     }
 
     private fun addSampleData() {
