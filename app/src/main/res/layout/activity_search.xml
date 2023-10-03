@@ -35,4 +35,11 @@
         app:layout_constraintTop_toTopOf="@id/searchCity"
         app:layout_constraintBottom_toBottomOf="@id/searchCity"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_30sdp"
+        app:layout_constraintTop_toBottomOf="@id/searchCity"
+        tools:listitem="@layout/cities_item_layout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
