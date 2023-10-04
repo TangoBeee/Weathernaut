@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Weathernaut"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.base.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.App.Starting">
             <intent-filter>
@@ -22,12 +22,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.SettingActivity"
+            android:name=".ui.base.SettingActivity"
             android:exported="false"
             android:label="@string/title_activity_setting"
             android:theme="@style/Theme.Weathernaut.Simple" />
         <activity
-            android:name=".ui.SearchActivity"
+            android:name=".ui.base.SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.Weathernaut.Simple" />
 

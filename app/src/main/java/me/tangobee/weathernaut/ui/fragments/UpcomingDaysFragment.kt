@@ -1,4 +1,4 @@
-package me.tangobee.weathernaut.ui
+package me.tangobee.weathernaut.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

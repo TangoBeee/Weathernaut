@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="me.tangobee.weathernaut.ui.HomeFragment"
+        android:name="me.tangobee.weathernaut.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/upcomingDaysFragment"
-        android:name="me.tangobee.weathernaut.ui.UpcomingDaysFragment"
+        android:name="me.tangobee.weathernaut.ui.fragments.UpcomingDaysFragment"
         android:label="fragment_upcoming_days"
         tools:layout="@layout/fragment_upcoming_days" />
 

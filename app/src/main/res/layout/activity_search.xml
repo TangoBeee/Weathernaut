@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SearchActivity"
+    tools:context=".ui.base.SearchActivity"
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:padding="@dimen/_20sdp">

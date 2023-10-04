@@ -1,4 +1,4 @@
-package me.tangobee.weathernaut.ui
+package me.tangobee.weathernaut.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

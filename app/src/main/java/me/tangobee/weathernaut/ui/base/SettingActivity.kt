@@ -1,4 +1,4 @@
-package me.tangobee.weathernaut.ui
+package me.tangobee.weathernaut.ui.base
 
 import android.content.Intent
 import android.net.Uri

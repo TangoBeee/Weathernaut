@@ -1,4 +1,4 @@
-package me.tangobee.weathernaut.ui
+package me.tangobee.weathernaut.ui.fragments
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,6 +16,8 @@ import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.HorizontalWeatherAdapter
 import me.tangobee.weathernaut.databinding.FragmentHomeBinding
 import me.tangobee.weathernaut.model.WeatherTimeCardData
+import me.tangobee.weathernaut.ui.base.SearchActivity
+import me.tangobee.weathernaut.ui.base.SettingActivity
 import me.tangobee.weathernaut.util.NavigateFragmentUtil
 
 class HomeFragment : Fragment() {
