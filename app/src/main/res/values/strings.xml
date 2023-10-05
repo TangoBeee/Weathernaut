@@ -64,4 +64,5 @@
     <string name="day_5_weather_icon">Day 5 Weather Icon</string>
     <string name="day_6_weather_icon">Day 6 Weather Icon</string>
     <string name="add_remove_button">Add/Remove Button</string>
+    <string name="city_already_added">Added</string>
 </resources>
