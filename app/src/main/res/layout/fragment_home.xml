@@ -168,22 +168,22 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:drawableStartCompat="@drawable/icon_umbrella"
+                        app:drawableStartCompat="@drawable/icon_atmospheric_pressure"
                         android:drawablePadding="@dimen/_10sdp"
                         android:fontFamily="@font/inter"
                         android:gravity="center"
-                        android:text="@string/rainfall"
+                        android:text="@string/atmospheric_pressure"
                         android:textColor="@color/textColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/rainFallValue"
+                        android:id="@+id/atmosphericPressureValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
-                        android:text="@string/dummyRainFall"
+                        android:text="@string/dummyAtmosphericPressure"
                         android:textColor="@color/textColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

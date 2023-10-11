@@ -10,21 +10,42 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.launch
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.HorizontalWeatherAdapter
+import me.tangobee.weathernaut.data.RetrofitHelper
+import me.tangobee.weathernaut.data.local.LocationSharedPrefService
+import me.tangobee.weathernaut.data.remote.CurrentLocationService
+import me.tangobee.weathernaut.data.repository.CurrentLocationRepository
+import me.tangobee.weathernaut.data.repository.LocationSharedPrefRepository
 import me.tangobee.weathernaut.databinding.FragmentHomeBinding
+import me.tangobee.weathernaut.model.CurrentLocationData
 import me.tangobee.weathernaut.model.WeatherTimeCardData
 import me.tangobee.weathernaut.ui.base.SearchActivity
 import me.tangobee.weathernaut.ui.base.SettingActivity
+import me.tangobee.weathernaut.util.AppConstants
+import me.tangobee.weathernaut.util.CountryNameByCode
 import me.tangobee.weathernaut.util.NavigateFragmentUtil
+import me.tangobee.weathernaut.viewmodel.CurrentLocationViewModel
+import me.tangobee.weathernaut.viewmodel.LocationSharedPrefViewModel
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.CurrentLocationViewModelFactory
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.LocationSharedPrefViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
     private lateinit var weatherCardData: ArrayList<WeatherTimeCardData>
+
+    private lateinit var currentLocationViewModel: CurrentLocationViewModel
+    private lateinit var locationSharedPrefViewModel: LocationSharedPrefViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +59,28 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Setting data in UI
+        val currentDate = Date()
+        val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
+        binding.date.text = dateFormat.format(currentDate)
+
+        initCurrentLocationThing()
+        initLocationSharedPrefThing()
+
+        //Getting and setting data from LocationSharedPrefViewModel to UI
+        val locationSharedPrefData = locationSharedPrefViewModel.getData()
+        if(locationSharedPrefData != null) setDataToUI(locationSharedPrefData)
+
+        //Observing LiveData from CurrentLocationViewModel
+        currentLocationViewModel.approximateLocationLiveData.observe(viewLifecycleOwner) {
+            if(it != null) {
+                if(locationSharedPrefData == null || locationSharedPrefData.loc != it.loc) {
+                    locationSharedPrefViewModel.sendData(it)
+                    setDataToUI(it)
+                }
+            }
+        }
+
         addSampleData()
         setHorizontalWeatherViewAdapter()
 
@@ -46,6 +89,11 @@ class HomeFragment : Fragment() {
         binding.next7days.setOnClickListener { navToUpcomingDaysFrag() }
         binding.today.setOnClickListener { changeWeatherToToday() }
         binding.tomorrow.setOnClickListener { changeWeatherToTomorrow() }
+    }
+
+    private fun setDataToUI(currentLocation: CurrentLocationData) {
+        binding.cityName.text = currentLocation.city
+        binding.countryName.text = CountryNameByCode.getCountryNameByCode(requireContext(), currentLocation.country)
     }
 
     private fun changeWeatherToToday() {
@@ -111,6 +159,27 @@ class HomeFragment : Fragment() {
     private fun navToUpcomingDaysFrag() {
         val navHelper = NavigateFragmentUtil()
         navHelper.navigateToFragment(requireView(), R.id.nav_homeFrag_to_upcomingDaysFrag)
+    }
+
+    private fun initCurrentLocationThing() {
+        //Initialization of CurrentLocationRepository and CurrentLocationServices
+        val currentLocationService = RetrofitHelper.getInstance(AppConstants.CURRENT_LOCATION_API_BASE_URL).create(CurrentLocationService::class.java)
+        val currentLocationRepository = CurrentLocationRepository(currentLocationService)
+
+        //Initialization of CurrentLocationViewModel
+        currentLocationViewModel = ViewModelProvider(this@HomeFragment, CurrentLocationViewModelFactory(currentLocationRepository))[CurrentLocationViewModel::class.java]
+
+        //Calling API to get current location
+        lifecycleScope.launch {
+            currentLocationViewModel.getLocation()
+        }
+    }
+
+    private fun initLocationSharedPrefThing() {
+        val locationSharedPrefService = LocationSharedPrefService(requireContext())
+        val locationSharedPrefRepository = LocationSharedPrefRepository(locationSharedPrefService)
+
+        locationSharedPrefViewModel = ViewModelProvider(this@HomeFragment, LocationSharedPrefViewModelFactory(locationSharedPrefRepository))[LocationSharedPrefViewModel::class.java]
     }
 
     private fun addSampleData() {

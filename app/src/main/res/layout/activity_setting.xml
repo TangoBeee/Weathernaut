@@ -173,7 +173,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rainfall_unit"
+                        android:text="@string/atmospheric_pressure_unit"
                         android:fontFamily="@font/inter_medium"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13ssp"
@@ -186,7 +186,7 @@
                         app:drawableEndCompat="@drawable/icon_dropdown"
                         app:drawableTint="@color/defaultColor"
                         android:drawablePadding="@dimen/_5sdp"
-                        android:text="@string/centimeters"
+                        android:text="@string/atm"
                         android:textColor="@color/defaultColor"
                         android:fontFamily="@font/inter"
                         android:layout_weight="1"
