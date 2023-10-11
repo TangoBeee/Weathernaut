@@ -35,10 +35,42 @@
         app:layout_constraintTop_toTopOf="@id/searchCity"
         app:layout_constraintBottom_toBottomOf="@id/searchCity"/>
 
+    <Button
+        android:id="@+id/locateMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/locate_me"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/_9ssp"
+        android:fontFamily="@font/inter"
+        android:drawableEnd="@drawable/icon_locate"
+        android:drawableTint="@color/black"
+        android:background="@drawable/locate_me_button_style"
+        app:backgroundTint="@null"
+        android:elevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/searchPlaceholderTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="@string/search_your_city"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/defaultColor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/citiesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/_30sdp"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintTop_toBottomOf="@id/searchCity"
