@@ -185,9 +185,20 @@
                         android:fontFamily="@font/inter"
                         android:text="@string/dummyAtmosphericPressure"
                         android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_1sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/atmosphericPressureUnit"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/atmosphericPressureUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="@string/atm"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/atmosphericPressureValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/atmosphericPressureValue" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -219,9 +230,20 @@
                         android:fontFamily="@font/inter"
                         android:text="@string/dummyWindSpeed"
                         android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_1sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/windUnit"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/windUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="@string/meters_per_second"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/windValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/windValue" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -246,15 +268,26 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/dropValue"
+                        android:id="@+id/humidityValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter"
                         android:text="@string/dummyHumiditySize"
                         android:textColor="@color/textColor"
+                        android:layout_marginEnd="@dimen/_1sdp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/humidityUnit"
                         app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/humidityUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="@string/percentage"
+                        android:textColor="@color/textColor"
+                        app:layout_constraintBottom_toBottomOf="@id/humidityValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/humidityValue" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

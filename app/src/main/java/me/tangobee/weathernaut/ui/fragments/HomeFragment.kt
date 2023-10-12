@@ -21,12 +21,18 @@ import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.HorizontalWeatherAdapter
 import me.tangobee.weathernaut.data.RetrofitHelper
 import me.tangobee.weathernaut.data.local.LocationSharedPrefService
+import me.tangobee.weathernaut.data.local.SettingsSharedPrefService
 import me.tangobee.weathernaut.data.remote.CurrentLocationService
+import me.tangobee.weathernaut.data.remote.WeatherService
 import me.tangobee.weathernaut.data.repository.CurrentLocationRepository
 import me.tangobee.weathernaut.data.repository.LocationSharedPrefRepository
+import me.tangobee.weathernaut.data.repository.SettingsSharedPrefRepository
+import me.tangobee.weathernaut.data.repository.WeatherRepository
 import me.tangobee.weathernaut.databinding.FragmentHomeBinding
 import me.tangobee.weathernaut.model.CurrentLocationData
+import me.tangobee.weathernaut.model.SettingsData
 import me.tangobee.weathernaut.model.WeatherTimeCardData
+import me.tangobee.weathernaut.model.weathermodel.WeatherData
 import me.tangobee.weathernaut.ui.base.SearchActivity
 import me.tangobee.weathernaut.ui.base.SettingActivity
 import me.tangobee.weathernaut.util.AppConstants
@@ -34,8 +40,12 @@ import me.tangobee.weathernaut.util.CountryNameByCode
 import me.tangobee.weathernaut.util.NavigateFragmentUtil
 import me.tangobee.weathernaut.viewmodel.CurrentLocationViewModel
 import me.tangobee.weathernaut.viewmodel.LocationSharedPrefViewModel
+import me.tangobee.weathernaut.viewmodel.SettingsSharedPrefViewModel
+import me.tangobee.weathernaut.viewmodel.WeatherViewModel
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.CurrentLocationViewModelFactory
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.LocationSharedPrefViewModelFactory
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.SettingsSharedPrefViewModelFactory
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.WeatherViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -46,8 +56,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var weatherCardData: ArrayList<WeatherTimeCardData>
 
+    private lateinit var weatherViewModel: WeatherViewModel
+
+    private lateinit var settingsData: SettingsData
+
     private lateinit var currentLocationViewModel: CurrentLocationViewModel
     private lateinit var locationSharedPrefViewModel: LocationSharedPrefViewModel
+    private lateinit var settingSharedPrefViewModel: SettingsSharedPrefViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,20 +81,43 @@ class HomeFragment : Fragment() {
         val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
         binding.date.text = dateFormat.format(currentDate)
 
+        //First get location then set the location data in local and in UI after that get weather data from API
         initCurrentLocationThing()
         initLocationSharedPrefThing()
+        initSettingsSharedPrefThing()
+        initWeatherAPIThing()
 
         //Getting and setting data from LocationSharedPrefViewModel to UI
         val locationSharedPrefData = locationSharedPrefViewModel.getData()
-        if(locationSharedPrefData != null) setDataToUI(locationSharedPrefData)
+        if(locationSharedPrefData != null) setLocationDataToUI(locationSharedPrefData)
 
         //Observing LiveData from CurrentLocationViewModel
         currentLocationViewModel.approximateLocationLiveData.observe(viewLifecycleOwner) {
             if(it != null) {
                 if(locationSharedPrefData == null || locationSharedPrefData.loc != it.loc) {
                     locationSharedPrefViewModel.sendData(it)
-                    setDataToUI(it)
+                    setLocationDataToUI(it)
                 }
+            }
+        }
+
+        //Getting Data from Settings SharedPref
+        settingsData = settingSharedPrefViewModel.getData()!!
+        setSettingDataToUI(settingsData)
+
+        //Calling Weather API
+        val loc = locationSharedPrefData?.loc?.split(",")
+        if(loc != null) {
+            val lat = loc[0]
+            val lon = loc[1]
+            lifecycleScope.launch {
+                weatherViewModel.getWeather(lat, lon, resources.getString(R.string.api_key))
+            }
+        }
+
+        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
+            if(it != null) {
+                setWeatherDataToUI(it)
             }
         }
 
@@ -93,9 +131,50 @@ class HomeFragment : Fragment() {
         binding.tomorrow.setOnClickListener { changeWeatherToTomorrow() }
     }
 
-    private fun setDataToUI(currentLocation: CurrentLocationData) {
+    private fun setLocationDataToUI(currentLocation: CurrentLocationData) {
         binding.cityName.text = currentLocation.city
         binding.countryName.text = CountryNameByCode.getCountryNameByCode(requireContext(), currentLocation.country)
+    }
+
+    private fun setWeatherDataToUI(weatherData: WeatherData) {
+        var temp = weatherData.main.temp
+
+        if(settingsData.temperatureUnit == resources.getString(R.string.fahrenheit)) {
+            temp = (temp-273.15)*1.8+32
+        } else {
+            temp -= 273.15
+        }
+
+        if(settingsData.atmosphericPressureUnit == resources.getString(R.string.atm)) {
+            val pressure = weatherData.main.pressure * 0.000987
+            binding.atmosphericPressureValue.text = pressure.toString()
+        } else {
+            binding.atmosphericPressureValue.text = weatherData.main.pressure.toString()
+        }
+
+        if(settingsData.windSpeedUnit == resources.getString(R.string.miles_per_hour)) {
+            val speed = weatherData.wind.speed*2.237
+            binding.windValue.text = String.format("%.2f", speed)
+        } else if(settingsData.windSpeedUnit == resources.getString(R.string.kilometers_per_hour)) {
+            val speed = weatherData.wind.speed*3.6
+            binding.windValue.text = String.format("%.2f", speed)
+        } else {
+            binding.windValue.text = weatherData.wind.speed.toString()
+        }
+
+        binding.weatherNumericValue.text = String.format("%.0f", temp)
+        binding.humidityValue.text = weatherData.main.humidity.toString()
+    }
+
+    private fun setSettingDataToUI(settingsData: SettingsData) {
+        if(settingsData.temperatureUnit == resources.getString(R.string.celsius)) {
+            binding.weatherUnit.text = resources.getString(R.string.celsius)
+        } else {
+            binding.weatherUnit.text = resources.getString(R.string.fahrenheit)
+        }
+
+        binding.atmosphericPressureUnit.text = settingsData.atmosphericPressureUnit
+        binding.windUnit.text = settingsData.windSpeedUnit
     }
 
     private fun changeWeatherToToday() {
@@ -167,6 +246,16 @@ class HomeFragment : Fragment() {
         navHelper.navigateToFragment(requireView(), R.id.nav_homeFrag_to_upcomingDaysFrag)
     }
 
+    private fun initWeatherAPIThing() {
+        //Initialization of GeoLocationRepository and GeoLocationServices
+        val weatherService = RetrofitHelper.getInstance(AppConstants.OpenWeatherMap_API_BASE_URL).create(
+            WeatherService::class.java)
+        val weatherRepository = WeatherRepository(weatherService)
+
+        //Initialization of GeoLocationViewModel
+        weatherViewModel = ViewModelProvider(this@HomeFragment, WeatherViewModelFactory(weatherRepository))[WeatherViewModel::class.java]
+    }
+
     private fun initCurrentLocationThing() {
         //Initialization of CurrentLocationRepository and CurrentLocationServices
         val currentLocationService = RetrofitHelper.getInstance(AppConstants.CURRENT_LOCATION_API_BASE_URL).create(CurrentLocationService::class.java)
@@ -186,6 +275,13 @@ class HomeFragment : Fragment() {
         val locationSharedPrefRepository = LocationSharedPrefRepository(locationSharedPrefService)
 
         locationSharedPrefViewModel = ViewModelProvider(this@HomeFragment, LocationSharedPrefViewModelFactory(locationSharedPrefRepository))[LocationSharedPrefViewModel::class.java]
+    }
+
+    private fun initSettingsSharedPrefThing() {
+        val settingsSharedPrefService = SettingsSharedPrefService(requireContext())
+        val settingsSharedPrefRepository = SettingsSharedPrefRepository(settingsSharedPrefService)
+
+        settingSharedPrefViewModel = ViewModelProvider(this@HomeFragment, SettingsSharedPrefViewModelFactory(settingsSharedPrefRepository))[SettingsSharedPrefViewModel::class.java]
     }
 
     private fun addSampleData() {

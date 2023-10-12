@@ -9,6 +9,7 @@ object AppConstants {
 
     //SharedPref data name
     const val LOCATION_SHARED_PREF = "locationData"
+    const val SETTINGS_SHARED_PREF = "settingsData"
 
     //Base URLs
     const val OpenWeatherMap_API_BASE_URL = "https://api.openweathermap.org/"
