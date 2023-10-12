@@ -150,7 +150,7 @@
                         app:drawableEndCompat="@drawable/icon_dropdown"
                         app:drawableTint="@color/defaultColor"
                         android:drawablePadding="@dimen/_5sdp"
-                        android:text="@string/beaufort_scale"
+                        android:text="@string/meters_per_second"
                         android:textColor="@color/defaultColor"
                         android:fontFamily="@font/inter"
                         android:layout_weight="1"
@@ -160,7 +160,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/rainfallUnit"
+                    android:id="@+id/atmosphericPressureUnit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -180,7 +180,7 @@
                         android:layout_weight="1"/>
 
                     <TextView
-                        android:id="@+id/rainFallSpinner"
+                        android:id="@+id/atmosphericPressureSpinner"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:drawableEndCompat="@drawable/icon_dropdown"
@@ -245,7 +245,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sound_effects"
+                            android:text="@string/weather_music"
                             android:fontFamily="@font/inter_medium"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_13ssp" />
@@ -253,7 +253,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/sound_effect_descp"
+                            android:text="@string/weather_music_descp"
                             android:fontFamily="@font/inter"
                             android:textColor="#7A7A7B"
                             android:textSize="@dimen/_9ssp" />
