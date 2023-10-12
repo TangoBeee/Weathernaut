@@ -1,8 +1,10 @@
 package me.tangobee.weathernaut.ui.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -153,7 +155,11 @@ class HomeFragment : Fragment() {
     private fun moveToSearch() {
         val intent = Intent(requireContext(), SearchActivity::class.java)
         startActivity(intent)
-        requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+            requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+        } else {
+            requireActivity().overrideActivityTransition(Activity.OVERRIDE_TRANSITION_OPEN, R.anim.fadein, R.anim.fadeout)
+        }
     }
 
     private fun navToUpcomingDaysFrag() {

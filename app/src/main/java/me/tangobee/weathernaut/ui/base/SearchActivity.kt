@@ -1,5 +1,7 @@
 package me.tangobee.weathernaut.ui.base
 
+import android.app.Activity
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -45,13 +47,21 @@ class SearchActivity : AppCompatActivity() {
         //On Press Back Navigation Button
         onBackPressedDispatcher.addCallback(this) {
             finish()
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+            } else {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, R.anim.fadein, R.anim.fadeout)
+            }
         }
 
         //On Press Back ImageButton
         binding.cancelSearch.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+            if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout)
+            } else {
+                overrideActivityTransition(Activity.OVERRIDE_TRANSITION_CLOSE, R.anim.fadein, R.anim.fadeout)
+            }
         }
 
         //Initialization of GeoLocationRepository and GeoLocationServices
