@@ -7,11 +7,11 @@ data class WeatherData(
     val coord: Coord,
     val dt: Int,
     val id: Int,
-    val main: Main,
+    val main: MainData,
     val name: String,
-    val sys: Sys,
+    val sys: SunData,
     val timezone: Int,
     val visibility: Int,
-    val weather: List<Weather>,
+    val weather: List<WeatherType>,
     val wind: Wind
 )
