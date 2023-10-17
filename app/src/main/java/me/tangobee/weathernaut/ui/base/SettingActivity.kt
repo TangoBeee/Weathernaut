@@ -14,6 +14,7 @@ import me.tangobee.weathernaut.data.local.SettingsSharedPrefService
 import me.tangobee.weathernaut.data.repository.SettingsSharedPrefRepository
 import me.tangobee.weathernaut.databinding.ActivitySettingBinding
 import me.tangobee.weathernaut.model.SettingsData
+import me.tangobee.weathernaut.ui.liveDate.SettingsLiveData
 import me.tangobee.weathernaut.viewmodel.SettingsSharedPrefViewModel
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.SettingsSharedPrefViewModelFactory
 
@@ -54,6 +55,14 @@ class SettingActivity : AppCompatActivity() {
             settingsData?.weatherMusic = !flag
             sendDataToSharedPref()
         }
+        binding.soundEffectSwitch.setOnClickListener {
+            val flag = binding.soundEffectSwitch.isChecked
+            binding.soundEffectSwitch.setChecked(!flag)
+
+            settingsData?.weatherMusic = !flag
+            sendDataToSharedPref()
+        }
+
         binding.back.setOnClickListener {onBackPressedDispatcher.onBackPressed()}
     }
 
@@ -73,6 +82,7 @@ class SettingActivity : AppCompatActivity() {
     }
 
     private fun sendDataToSharedPref() {
+        SettingsLiveData.updateSettingsData(settingsData!!)
         settingsSharedPrefViewModel.sendData(settingsData!!)
     }
 

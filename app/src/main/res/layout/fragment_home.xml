@@ -93,15 +93,15 @@
 
             <ImageView
                 android:id="@+id/weatherIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/icon_weather_sun_rain_cloud"
+                android:layout_width="143dp"
+                android:layout_height="139dp"
+                android:src="@drawable/icon_weather_cloud"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/weatherNumericView"
                 app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintBottom_toBottomOf="@+id/weatherNumericView"
+                app:layout_constraintTop_toTopOf="@id/weatherNumericView"
                 android:contentDescription="@string/weather_icon_descrp" />
 
 
@@ -109,10 +109,10 @@
                 android:id="@+id/weatherNumericView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/weatherIcon"
+                android:layout_marginTop="@dimen/_50sdp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/weatherIcon"
-                app:layout_constraintTop_toTopOf="@+id/weatherIcon">
+                app:layout_constraintTop_toBottomOf="@id/date"
+                app:layout_constraintStart_toEndOf="@id/weatherIcon">
 
                 <TextView
                     android:id="@+id/weatherNumericValue"
@@ -155,9 +155,9 @@
                 android:id="@+id/weatherDataLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/weatherIcon">
+                app:layout_constraintTop_toBottomOf="@+id/weatherType">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package me.tangobee.weathernaut.adapter
 
+import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.model.CityLocationData
+import me.tangobee.weathernaut.ui.liveDate.SearchCitiesLiveData
 import me.tangobee.weathernaut.util.CountryNameByCode
 
 
@@ -35,6 +37,30 @@ class SearchCitiesAdapter(private val citiesList: CityLocationData) : Adapter<Se
 
         if(citiesList[position].alreadyExist) {
             holder.alreadyAdded.setImageResource(R.drawable.icon_right_arrow)
+        } else {
+            holder.alreadyAdded.setImageResource(R.drawable .icon_add)
+        }
+
+        holder.alreadyAdded.setOnClickListener {
+            if(citiesList[position].alreadyExist) {
+                citiesList[position].alreadyExist = !citiesList[position].alreadyExist
+                SearchCitiesLiveData.updateCitiesLiveData(citiesList[position])
+                (context as Activity).finish()
+            } else {
+                holder.alreadyAdded.setImageResource(R.drawable.icon_right_arrow)
+                for(i in 0 until itemCount) {
+                    if(citiesList[i].alreadyExist) {
+                        citiesList[i].alreadyExist = !citiesList[i].alreadyExist
+                        notifyItemChanged(i)
+                        break
+                    }
+                }
+
+                SearchCitiesLiveData.updateCitiesLiveData(citiesList[position])
+                citiesList[position].alreadyExist = !citiesList[position].alreadyExist
+            }
+
+            notifyItemChanged(position)
         }
     }
 
