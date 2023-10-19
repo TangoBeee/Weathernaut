@@ -10,9 +10,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import me.tangobee.weathernaut.R
-import me.tangobee.weathernaut.model.WeatherTimeCardData
+import me.tangobee.weathernaut.model.WeatherHourlyCardData
 
-class HorizontalWeatherAdapter(private val weatherDataList: List<WeatherTimeCardData>) :
+class HorizontalWeatherAdapter(private val weatherDataList: List<WeatherHourlyCardData>) :
     Adapter<HorizontalWeatherAdapter.HorizontalWeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalWeatherViewHolder {

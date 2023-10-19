@@ -10,15 +10,26 @@
         android:name="me.tangobee.weathernaut.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
+
         <action
             android:id="@+id/nav_homeFrag_to_upcomingDaysFrag"
             app:destination="@id/upcomingDaysFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/upcomingDaysFragment"
         android:name="me.tangobee.weathernaut.ui.fragments.UpcomingDaysFragment"
         android:label="fragment_upcoming_days"
-        tools:layout="@layout/fragment_upcoming_days" />
+        tools:layout="@layout/fragment_upcoming_days">
+
+        <argument android:name="lat"
+            app:argType="string"/>
+
+        <argument android:name="lon"
+            app:argType="string"/>
+
+    </fragment>
 
 
 </navigation>

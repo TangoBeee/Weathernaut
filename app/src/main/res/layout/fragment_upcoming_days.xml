@@ -116,73 +116,50 @@
                     app:layout_constraintTop_toBottomOf="@id/tomorrowWeatherIcon">
 
                     <ImageView
-                        android:id="@+id/umbrellaIcon"
+                        android:id="@+id/sunriseIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_atmospheric_pressure"
+                        android:src="@drawable/icon_sunrise"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/windIcon"
-                        app:layout_constraintTop_toTopOf="@id/windIcon"
-                        app:layout_constraintBottom_toBottomOf="@id/windIcon"
+                        app:layout_constraintEnd_toStartOf="@id/sunsetIcon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:contentDescription="@string/tomorrow_rainfall_size" />
 
                     <TextView
-                        android:id="@+id/tomorrowRainFall"
+                        android:id="@+id/tomorrowSunrise"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0atm"
+                        android:text="@string/dummy_time"
                         android:textColor="@color/textColor"
                         android:fontFamily="@font/inter_semibold"
                         android:layout_marginTop="@dimen/_5sdp"
-                        app:layout_constraintTop_toBottomOf="@id/umbrellaIcon"
-                        app:layout_constraintStart_toStartOf="@id/umbrellaIcon"
-                        app:layout_constraintEnd_toEndOf="@id/umbrellaIcon" />
+                        app:layout_constraintTop_toBottomOf="@id/sunriseIcon"
+                        app:layout_constraintStart_toStartOf="@id/sunriseIcon"
+                        app:layout_constraintEnd_toEndOf="@id/sunriseIcon" />
 
                     <ImageView
-                        android:id="@+id/windIcon"
+                        android:id="@+id/sunsetIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_wind"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/icon_sunset"
+                        app:layout_constraintStart_toEndOf="@id/sunriseIcon"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:contentDescription="@string/tomorrow_wind_speed" />
-
-                    <TextView
-                        android:id="@+id/tomorrowWindSpeed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0 km/h"
-                        android:textColor="@color/textColor"
-                        android:fontFamily="@font/inter_semibold"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        app:layout_constraintTop_toBottomOf="@id/windIcon"
-                        app:layout_constraintStart_toStartOf="@id/windIcon"
-                        app:layout_constraintEnd_toEndOf="@id/windIcon" />
-
-                    <ImageView
-                        android:id="@+id/dropIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_drop"
-                        app:layout_constraintStart_toEndOf="@id/windIcon"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/windIcon"
-                        app:layout_constraintBottom_toBottomOf="@id/windIcon"
                         android:contentDescription="@string/tomorrow_humidity" />
 
                     <TextView
-                        android:id="@+id/tomorrowHumidity"
+                        android:id="@+id/tomorrowSunset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0%"
+                        android:text="@string/dummy_time"
                         android:textColor="@color/textColor"
                         android:fontFamily="@font/inter_semibold"
                         android:layout_marginTop="@dimen/_5sdp"
-                        app:layout_constraintTop_toBottomOf="@id/dropIcon"
-                        app:layout_constraintStart_toStartOf="@id/dropIcon"
-                        app:layout_constraintEnd_toEndOf="@id/dropIcon" />
+                        app:layout_constraintTop_toBottomOf="@id/sunsetIcon"
+                        app:layout_constraintStart_toStartOf="@id/sunsetIcon"
+                        app:layout_constraintEnd_toEndOf="@id/sunsetIcon" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

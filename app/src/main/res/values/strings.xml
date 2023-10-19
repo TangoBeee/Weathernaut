@@ -70,4 +70,5 @@
     <string name="locate_me">Locate me</string>
     <string name="percentage">%</string>
     <string name="try_again">Try Again</string>
+    <string name="dummy_time">00:00</string>
 </resources>

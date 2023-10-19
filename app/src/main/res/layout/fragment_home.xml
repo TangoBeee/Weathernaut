@@ -312,6 +312,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tomorrow"
+            android:clickable="false"
             android:textColor="#D6996B"
             android:fontFamily="@font/inter"
             android:layout_marginStart="@dimen/_20sdp"
@@ -323,6 +324,7 @@
             android:id="@+id/next7days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             app:drawableEndCompat="@drawable/icon_right_arrow"
             app:drawableTint="#4B4B4B"
             android:drawablePadding="@dimen/_10sdp"
@@ -352,12 +354,89 @@
             app:layout_constraintTop_toTopOf="@id/separator"
             app:layout_constraintBottom_toBottomOf="@id/separator"/>
 
+        <HorizontalScrollView
+            android:id="@+id/hourlyShimmerLayoutContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:scrollbarSize="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/separator"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/hourlyShimmerLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/shimmerView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/weather_time_column_style"
+                        android:backgroundTint="@color/black"
+                        android:paddingHorizontal="@dimen/_30sdp"
+                        android:paddingVertical="@dimen/_43sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/shimmerView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/weather_time_column_style"
+                        android:backgroundTint="@color/black"
+                        android:paddingHorizontal="@dimen/_30sdp"
+                        android:paddingVertical="@dimen/_43sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/shimmerView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/weather_time_column_style"
+                        android:backgroundTint="@color/black"
+                        android:paddingHorizontal="@dimen/_30sdp"
+                        android:paddingVertical="@dimen/_43sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/shimmerView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/weather_time_column_style"
+                        android:backgroundTint="@color/black"
+                        android:paddingHorizontal="@dimen/_30sdp"
+                        android:paddingVertical="@dimen/_43sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/shimmerView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/weather_time_column_style"
+                        android:backgroundTint="@color/black"
+                        android:paddingHorizontal="@dimen/_30sdp"
+                        android:paddingVertical="@dimen/_43sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"/>
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/smallWeatherCardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/weather_time_card_layout"
+            android:visibility="gone"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/_20sdp"
             app:layout_constraintTop_toBottomOf="@+id/separator"

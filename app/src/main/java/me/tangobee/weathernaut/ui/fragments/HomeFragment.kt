@@ -29,8 +29,10 @@ import me.tangobee.weathernaut.data.local.LocationSharedPrefService
 import me.tangobee.weathernaut.data.local.SettingsSharedPrefService
 import me.tangobee.weathernaut.data.local.WeatherSharedPrefService
 import me.tangobee.weathernaut.data.remote.CurrentLocationService
+import me.tangobee.weathernaut.data.remote.HourlyWeatherService
 import me.tangobee.weathernaut.data.remote.WeatherService
 import me.tangobee.weathernaut.data.repository.CurrentLocationRepository
+import me.tangobee.weathernaut.data.repository.HourlyWeatherRepository
 import me.tangobee.weathernaut.data.repository.LocationSharedPrefRepository
 import me.tangobee.weathernaut.data.repository.SettingsSharedPrefRepository
 import me.tangobee.weathernaut.data.repository.WeatherRepository
@@ -39,7 +41,8 @@ import me.tangobee.weathernaut.databinding.FragmentHomeBinding
 import me.tangobee.weathernaut.model.CityLocationDataItem
 import me.tangobee.weathernaut.model.CurrentLocationData
 import me.tangobee.weathernaut.model.SettingsData
-import me.tangobee.weathernaut.model.WeatherTimeCardData
+import me.tangobee.weathernaut.model.WeatherHourlyCardData
+import me.tangobee.weathernaut.model.nextweathermodel.hourlyweathers.HourlyWeatherModel
 import me.tangobee.weathernaut.model.weathermodel.WeatherData
 import me.tangobee.weathernaut.model.weathermodel.WeatherType
 import me.tangobee.weathernaut.ui.base.SearchActivity
@@ -51,32 +54,40 @@ import me.tangobee.weathernaut.util.AppConstants
 import me.tangobee.weathernaut.util.CountryNameByCode
 import me.tangobee.weathernaut.util.InternetConnection
 import me.tangobee.weathernaut.util.NavigateFragmentUtil
+import me.tangobee.weathernaut.util.TimeUtil
+import me.tangobee.weathernaut.util.WeatherCodeToIcon
 import me.tangobee.weathernaut.viewmodel.CurrentLocationViewModel
+import me.tangobee.weathernaut.viewmodel.HourlyWeatherViewModel
 import me.tangobee.weathernaut.viewmodel.LocationSharedPrefViewModel
 import me.tangobee.weathernaut.viewmodel.SettingsSharedPrefViewModel
 import me.tangobee.weathernaut.viewmodel.WeatherSharedPrefViewModel
 import me.tangobee.weathernaut.viewmodel.WeatherViewModel
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.CurrentLocationViewModelFactory
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.HourlyWeatherViewModelFactory
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.LocationSharedPrefViewModelFactory
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.SettingsSharedPrefViewModelFactory
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.WeatherSharedPrefViewModelFactory
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.WeatherViewModelFactory
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
 
-    private lateinit var weatherCardData: ArrayList<WeatherTimeCardData>
+    private lateinit var weatherCardData: ArrayList<WeatherHourlyCardData>
 
     private lateinit var settingsData: SettingsData
+    private lateinit var hourlyWeatherData: HourlyWeatherModel
 
     private lateinit var settingsDataObserver: Observer<SettingsData>
     private lateinit var citiesDataObserver: Observer<CityLocationDataItem>
 
     private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var hourlyWeatherViewModel: HourlyWeatherViewModel
     private lateinit var currentLocationViewModel: CurrentLocationViewModel
     private lateinit var locationSharedPrefViewModel: LocationSharedPrefViewModel
     private lateinit var settingSharedPrefViewModel: SettingsSharedPrefViewModel
@@ -99,11 +110,13 @@ class HomeFragment : Fragment() {
         val dateFormat = SimpleDateFormat("EEE, MMM dd", Locale.getDefault())
         binding.date.text = dateFormat.format(currentDate)
 
+        binding.hourlyShimmerLayout.startShimmer()
+
         //Observing the changes in settings
         settingsDataObserver = Observer {
             setSettingDataToUI(it)
         }
-        SettingsLiveData.getSettingsLiveData().observe(viewLifecycleOwner, settingsDataObserver)
+        SettingsLiveData.getSettingsLiveData().observe(requireActivity(), settingsDataObserver)
 
         //First get location then set the location data in local and in UI after that get weather data from API
         initCurrentLocationThing()
@@ -111,6 +124,7 @@ class HomeFragment : Fragment() {
         initWeatherSharedPrefThing()
         initSettingsSharedPrefThing()
         initWeatherAPIThing()
+        initHourlyWeatherAPIThing()
 
         //Getting and setting data from LocationSharedPrefViewModel to UI
         val locationSharedPrefData = locationSharedPrefViewModel.getData()
@@ -125,12 +139,13 @@ class HomeFragment : Fragment() {
         weatherData?.let { setWeatherDataToUI(it) }
 
         //Observing LiveData from CurrentLocationViewModel
-        currentLocationViewModel.approximateLocationLiveData.observe(viewLifecycleOwner) {
+        currentLocationViewModel.approximateLocationLiveData.observe(requireActivity()) {
             if(it != null) {
                 if(locationSharedPrefData == null || locationSharedPrefData.loc != it.loc && locationSharedPrefData.ip.isNotEmpty()) {
                     locationSharedPrefViewModel.sendData(it)
                     setLocationDataToUI(it)
                     callingWeatherAPI(it)
+                    callingHourlyWeatherAPI(it)
                 }
             }
         }
@@ -140,27 +155,59 @@ class HomeFragment : Fragment() {
             locationSharedPrefViewModel.sendData(data)
             setLocationDataToUI(data)
             callingWeatherAPI(data)
+            callingHourlyWeatherAPI(data)
         }
-        SearchCitiesLiveData.getCitiesLiveData().observe(viewLifecycleOwner, citiesDataObserver)
+        SearchCitiesLiveData.getCitiesLiveData().observe(requireActivity(), citiesDataObserver)
 
         //Observing the livedata from WeatherAPI
-        weatherViewModel.weatherLiveData.observe(viewLifecycleOwner) {
+        weatherViewModel.weatherLiveData.observe(requireActivity()) {
             if(it != null) {
                 setWeatherDataToUI(it)
+                binding.next7days.isClickable = true
                 weatherSharedPrefViewModel.sendData(it)
             }
         }
 
-        callingWeatherAPI(locationSharedPrefData)
+        //Observing the livedata from HourlyWeatherAPI
+        hourlyWeatherViewModel.weatherLiveData.observe(requireActivity()) {
+            if(it != null) {
+                hourlyWeatherData = it
+                changeWeatherToToday()
+            }
+        }
 
-        addSampleData()
-        setHorizontalWeatherViewAdapter()
+        callingWeatherAPI(locationSharedPrefData)
+        callingHourlyWeatherAPI(locationSharedPrefData)
 
         binding.settings.setOnClickListener { moveToSettings() }
         binding.search.setOnClickListener {moveToSearch()}
-        binding.next7days.setOnClickListener { navToUpcomingDaysFrag() }
+        binding.next7days.setOnClickListener { navToUpcomingDaysFrag(locationSharedPrefData?.loc!!) }
         binding.today.setOnClickListener { changeWeatherToToday() }
         binding.tomorrow.setOnClickListener { changeWeatherToTomorrow() }
+    }
+
+    private fun callingHourlyWeatherAPI(locationData: CurrentLocationData?) {
+        val loc = locationData?.loc?.split(",")
+        if(loc != null) {
+            val lat = loc[0]
+            val lon = loc[1]
+            if(InternetConnection.isNetworkAvailable(requireActivity())) {
+                lifecycleScope.launch {
+                    hourlyWeatherViewModel.getWeather(lat, lon, AppConstants.HOURLY_WEATHER_QUERY, AppConstants.HOURLY_WEATHER_CODE, AppConstants.HOURLY_WEATHER_DAYS_LIMIT, TimeZone.getDefault().id)
+                }
+            } else {
+                val snackBar = Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
+                snackBar.setAction(R.string.try_again) {
+                    if(InternetConnection.isNetworkAvailable(requireActivity())) {
+                        lifecycleScope.launch {
+                            hourlyWeatherViewModel.getWeather(lat, lon, AppConstants.HOURLY_WEATHER_QUERY, AppConstants.HOURLY_WEATHER_CODE, AppConstants.HOURLY_WEATHER_DAYS_LIMIT, TimeZone.getDefault().id)
+                        }
+                    } else {
+                        Toast.makeText(requireActivity(), "No internet connection. Please try later.", Toast.LENGTH_SHORT).show()
+                    }
+                }.show()
+            }
+        }
     }
 
     private fun callingWeatherAPI(locationData: CurrentLocationData?) {
@@ -168,19 +215,19 @@ class HomeFragment : Fragment() {
         if(loc != null) {
             val lat = loc[0]
             val lon = loc[1]
-            if(InternetConnection.isNetworkAvailable(requireContext())) {
+            if(InternetConnection.isNetworkAvailable(requireActivity())) {
                 lifecycleScope.launch {
                     weatherViewModel.getWeather(lat, lon, resources.getString(R.string.api_key))
                 }
             } else {
                 val snackBar = Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
                 snackBar.setAction(R.string.try_again) {
-                    if(InternetConnection.isNetworkAvailable(requireContext())) {
+                    if(InternetConnection.isNetworkAvailable(requireActivity())) {
                         lifecycleScope.launch {
                             weatherViewModel.getWeather(lat, lon, resources.getString(R.string.api_key))
                         }
                     } else {
-                        Toast.makeText(requireContext(), "No internet connection. Please try later.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "No internet connection. Please try later.", Toast.LENGTH_SHORT).show()
                     }
                 }.show()
             }
@@ -189,7 +236,7 @@ class HomeFragment : Fragment() {
 
     private fun setLocationDataToUI(currentLocation: CurrentLocationData) {
         binding.cityName.text = currentLocation.city
-        binding.countryName.text = CountryNameByCode.getCountryNameByCode(requireContext(), currentLocation.country)
+        binding.countryName.text = CountryNameByCode.getCountryNameByCode(requireActivity(), currentLocation.country)
     }
 
     private fun setWeatherDataToUI(weatherData: WeatherData) {
@@ -223,6 +270,60 @@ class HomeFragment : Fragment() {
         binding.weatherNumericValue.text = String.format("%.0f", temp)
         binding.humidityValue.text = weatherData.main.humidity.toString()
         binding.weatherType.text = weatherData.weather.first().main
+    }
+
+    private fun setHourlyWeatherDataToUI(hourlyWeatherData: HourlyWeatherModel, isToday: Boolean): Int {
+        val hourlyWeather = hourlyWeatherData.hourly
+
+        val time = hourlyWeather.time
+        val weather = hourlyWeather.temperature_2m
+        val weatherCode = hourlyWeather.weathercode
+
+        weatherCardData = ArrayList()
+
+        var position = 0
+
+        if(isToday) {
+            for (i in 0 .. 23) {
+                var currTime = TimeUtil.extractTimeFromString(time[i])
+                val currWeather = weather[i]
+                val weatherIcon = WeatherCodeToIcon.getWeatherIcon(weatherCode[i])
+                val isCurrentTime = isCurrentLocalTime(currTime)
+
+                if (isCurrentTime) {
+                    currTime = "now"
+                    position = i
+                }
+
+                val currTimeData = WeatherHourlyCardData(
+                    currTime,
+                    weatherIcon,
+                    String.format("%.0f", currWeather),
+                    isCurrentTime
+                )
+
+                weatherCardData.add(currTimeData)
+            }
+
+            return position
+        } else {
+            for (i in 24 .. 47) {
+                val currTime = TimeUtil.extractTimeFromString(time[i])
+                val currWeather = weather[i]
+                val weatherIcon = WeatherCodeToIcon.getWeatherIcon(weatherCode[i])
+
+                val currTimeData = WeatherHourlyCardData(
+                    currTime,
+                    weatherIcon,
+                    String.format("%.0f", currWeather),
+                    false
+                )
+
+                weatherCardData.add(currTimeData)
+            }
+
+            return 0
+        }
     }
 
     private fun setSettingDataToUI(settingsData: SettingsData) {
@@ -309,23 +410,23 @@ class HomeFragment : Fragment() {
     }
 
     private fun startWeatherMusicService(musicURL: String) {
-        val intent = Intent(requireContext(), WeatherMusicService::class.java)
+        val intent = Intent(requireActivity(), WeatherMusicService::class.java)
         if(settingsData.weatherMusic) {
             intent.putExtra("music_url", musicURL)
             if (!isServiceRunning(WeatherMusicService::class.java)) {
-                requireContext().startService(intent)
+                requireActivity().startService(intent)
             } else {
-                requireContext().stopService(intent)
-                requireContext().startService(intent)
+                requireActivity().stopService(intent)
+                requireActivity().startService(intent)
             }
         } else if(isServiceRunning(WeatherMusicService::class.java) && !settingsData.weatherMusic) {
-            requireContext().stopService(intent)
+            requireActivity().stopService(intent)
         }
     }
 
     @SuppressWarnings("deprecation")
     private fun isServiceRunning(serviceClass: Class<*>): Boolean {
-        val manager = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val manager = requireActivity().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.name == service.service.className) {
                 return true
@@ -334,10 +435,24 @@ class HomeFragment : Fragment() {
         return false
     }
 
+    private fun isCurrentLocalTime(timeString: String): Boolean {
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val currentTime = Calendar.getInstance()
+        val parsedTime = sdf.parse(timeString)
+
+        if (parsedTime != null) {
+            val parsedCalendar = Calendar.getInstance()
+            parsedCalendar.time = parsedTime
+
+            return currentTime.get(Calendar.HOUR_OF_DAY) == parsedCalendar.get(Calendar.HOUR_OF_DAY)
+        }
+
+        return false
+    }
 
     private fun changeWeatherToToday() {
-        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter_bold)
-        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter)
+        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter_bold)
+        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter)
 
         binding.today.typeface = todayTypeface
         binding.tomorrow.typeface = tomorrowTypeface
@@ -348,25 +463,39 @@ class HomeFragment : Fragment() {
         changeIndicatorDotPosition(R.id.today)
 
         //Adding Today's Weather Data in array and adapter
-        addSampleData()
+        val position = setHourlyWeatherDataToUI(hourlyWeatherData, true)
         setHorizontalWeatherViewAdapter()
+
+        binding.hourlyShimmerLayoutContainer.visibility = View.GONE
+        binding.hourlyShimmerLayout.stopShimmer()
+        binding.smallWeatherCardView.visibility = View.VISIBLE
+
+        binding.smallWeatherCardView.layoutManager?.scrollToPosition(position)
     }
 
     private fun changeWeatherToTomorrow() {
-        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter_bold)
-        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireContext(), R.font.inter)
+        if(::hourlyWeatherData.isInitialized) {
+            val tomorrowTypeface: Typeface? =
+                ResourcesCompat.getFont(requireActivity(), R.font.inter_bold)
+            val todayTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter)
 
-        binding.tomorrow.typeface = tomorrowTypeface
-        binding.today.typeface = todayTypeface
+            binding.tomorrow.typeface = tomorrowTypeface
+            binding.today.typeface = todayTypeface
 
-        binding.tomorrow.setTextColor(requireActivity().getColor(R.color.textColor))
-        binding.today.setTextColor(Color.parseColor("#D6996B"))
+            binding.tomorrow.setTextColor(requireActivity().getColor(R.color.textColor))
+            binding.today.setTextColor(Color.parseColor("#D6996B"))
 
-        changeIndicatorDotPosition(R.id.tomorrow)
+            changeIndicatorDotPosition(R.id.tomorrow)
 
-        //Adding Tomorrow's Weather Data in array and adapter
-        addSampleData1()
-        setHorizontalWeatherViewAdapter()
+            //Adding Tomorrow's Weather Data in array and adapter
+            setHourlyWeatherDataToUI(hourlyWeatherData, false)
+
+            binding.hourlyShimmerLayoutContainer.visibility = View.GONE
+            binding.hourlyShimmerLayout.stopShimmer()
+            binding.smallWeatherCardView.visibility = View.VISIBLE
+
+            setHorizontalWeatherViewAdapter()
+        }
     }
 
     private fun changeIndicatorDotPosition(viewId: Int) {
@@ -378,19 +507,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun setHorizontalWeatherViewAdapter() {
-        binding.smallWeatherCardView.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        binding.smallWeatherCardView.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.HORIZONTAL, false)
 
         val adapter = HorizontalWeatherAdapter(weatherCardData)
         binding.smallWeatherCardView.adapter = adapter
     }
 
     private fun moveToSettings() {
-        val intent = Intent(requireContext(), SettingActivity::class.java)
+        val intent = Intent(requireActivity(), SettingActivity::class.java)
         startActivity(intent)
     }
 
     private fun moveToSearch() {
-        val intent = Intent(requireContext(), SearchActivity::class.java)
+        val intent = Intent(requireActivity(), SearchActivity::class.java)
         startActivity(intent)
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
             requireActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout)
@@ -399,19 +528,28 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun navToUpcomingDaysFrag() {
+    private fun navToUpcomingDaysFrag(cord: String) {
+        val loc = cord.split(",")
+        val action = HomeFragmentDirections.navHomeFragToUpcomingDaysFrag(loc[0].trim(), loc[1].trim())
         val navHelper = NavigateFragmentUtil()
-        navHelper.navigateToFragment(requireView(), R.id.nav_homeFrag_to_upcomingDaysFrag)
+        navHelper.navigateToFragmentWithAction(requireView(), action)
     }
 
     private fun initWeatherAPIThing() {
-        //Initialization of GeoLocationRepository and GeoLocationServices
         val weatherService = RetrofitHelper.getInstance(AppConstants.OpenWeatherMap_API_BASE_URL).create(
             WeatherService::class.java)
         val weatherRepository = WeatherRepository(weatherService)
 
-        //Initialization of GeoLocationViewModel
         weatherViewModel = ViewModelProvider(requireActivity(), WeatherViewModelFactory(weatherRepository))[WeatherViewModel::class.java]
+    }
+
+    private fun initHourlyWeatherAPIThing() {
+        val hourlyWeatherService = RetrofitHelper.getInstance(AppConstants.OpenMeteo_API_BASE_URL).create(
+            HourlyWeatherService::class.java
+        )
+        val hourlyWeatherRepository = HourlyWeatherRepository(hourlyWeatherService)
+
+        hourlyWeatherViewModel = ViewModelProvider(requireActivity(), HourlyWeatherViewModelFactory(hourlyWeatherRepository))[HourlyWeatherViewModel::class.java]
     }
 
     private fun initCurrentLocationThing() {
@@ -423,7 +561,7 @@ class HomeFragment : Fragment() {
         currentLocationViewModel = ViewModelProvider(requireActivity(), CurrentLocationViewModelFactory(currentLocationRepository))[CurrentLocationViewModel::class.java]
 
         //Calling API to get current location
-        if(InternetConnection.isNetworkAvailable(requireContext())) {
+        if(InternetConnection.isNetworkAvailable(requireActivity())) {
             lifecycleScope.launch {
                 currentLocationViewModel.getLocation()
             }
@@ -431,13 +569,13 @@ class HomeFragment : Fragment() {
             val snackBar =
                 Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
             snackBar.setAction(R.string.try_again) {
-                if (InternetConnection.isNetworkAvailable(requireContext())) {
+                if (InternetConnection.isNetworkAvailable(requireActivity())) {
                     lifecycleScope.launch {
                         currentLocationViewModel.getLocation()
                     }
                 } else {
                     Toast.makeText(
-                        requireContext(),
+                        requireActivity(),
                         "No internet connection. Please try later.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -447,21 +585,21 @@ class HomeFragment : Fragment() {
     }
 
     private fun initLocationSharedPrefThing() {
-        val locationSharedPrefService = LocationSharedPrefService(requireContext())
+        val locationSharedPrefService = LocationSharedPrefService(requireActivity())
         val locationSharedPrefRepository = LocationSharedPrefRepository(locationSharedPrefService)
 
         locationSharedPrefViewModel = ViewModelProvider(requireActivity(), LocationSharedPrefViewModelFactory(locationSharedPrefRepository))[LocationSharedPrefViewModel::class.java]
     }
 
     private fun initSettingsSharedPrefThing() {
-        val settingsSharedPrefService = SettingsSharedPrefService(requireContext())
+        val settingsSharedPrefService = SettingsSharedPrefService(requireActivity())
         val settingsSharedPrefRepository = SettingsSharedPrefRepository(settingsSharedPrefService)
 
         settingSharedPrefViewModel = ViewModelProvider(requireActivity(), SettingsSharedPrefViewModelFactory(settingsSharedPrefRepository))[SettingsSharedPrefViewModel::class.java]
     }
 
     private fun initWeatherSharedPrefThing() {
-        val weatherSharedPrefService = WeatherSharedPrefService(requireContext())
+        val weatherSharedPrefService = WeatherSharedPrefService(requireActivity())
         val weatherSharedPrefRepository = WeatherSharedPrefRepository(weatherSharedPrefService)
 
         weatherSharedPrefViewModel = ViewModelProvider(requireActivity(), WeatherSharedPrefViewModelFactory(weatherSharedPrefRepository))[WeatherSharedPrefViewModel::class.java]
@@ -472,31 +610,6 @@ class HomeFragment : Fragment() {
 
         SettingsLiveData.getSettingsLiveData().removeObserver(settingsDataObserver)
         SearchCitiesLiveData.getCitiesLiveData().removeObserver(citiesDataObserver)
-    }
-
-    private fun addSampleData() {
-        weatherCardData = ArrayList()
-        weatherCardData.add(WeatherTimeCardData("11:00", R.drawable.icon_weather_cloud, "20°", false))
-        weatherCardData.add(WeatherTimeCardData("12:00", R.drawable.icon_weather_cloud_sun, "19°", false))
-        weatherCardData.add(WeatherTimeCardData("13:00", R.drawable.icon_weather_sun, "21°", false))
-        weatherCardData.add(WeatherTimeCardData("14:00", R.drawable.icon_weather_rain_cloud, "20°", false))
-        weatherCardData.add(WeatherTimeCardData("15:00", R.drawable.icon_weather_sun_rain_cloud_big, "20°", false))
-        weatherCardData.add(WeatherTimeCardData("16:00", R.drawable.icon_weather_cloud, "19°", true))
-        weatherCardData.add(WeatherTimeCardData("17:00", R.drawable.icon_weather_rain_cloud, "17°", false))
-        weatherCardData.add(WeatherTimeCardData("18:00", R.drawable.icon_weather_cloud_sun, "20°", false))
-    }
-
-
-    private fun addSampleData1() {
-        weatherCardData = ArrayList()
-        weatherCardData.add(WeatherTimeCardData("02:00", R.drawable.icon_weather_rain_cloud, "16°", false))
-        weatherCardData.add(WeatherTimeCardData("03:00", R.drawable.icon_weather_rain_cloud, "14°", false))
-        weatherCardData.add(WeatherTimeCardData("04:00", R.drawable.icon_weather_cloud_sun, "20°", false))
-        weatherCardData.add(WeatherTimeCardData("05:00", R.drawable.icon_weather_cloud, "19°", false))
-        weatherCardData.add(WeatherTimeCardData("06:00", R.drawable.icon_weather_sun, "21°", false))
-        weatherCardData.add(WeatherTimeCardData("07:00", R.drawable.icon_weather_cloud, "18°", false))
-        weatherCardData.add(WeatherTimeCardData("08:00", R.drawable.icon_weather_rain_cloud, "17°", false))
-        weatherCardData.add(WeatherTimeCardData("09:00", R.drawable.icon_weather_sun_rain_cloud_big, "20°", false))
     }
 
 }
