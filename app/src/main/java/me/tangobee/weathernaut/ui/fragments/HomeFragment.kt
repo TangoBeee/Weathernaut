@@ -86,6 +86,8 @@ class HomeFragment : Fragment() {
     private lateinit var settingsDataObserver: Observer<SettingsData>
     private lateinit var citiesDataObserver: Observer<CityLocationDataItem>
 
+    private var locationSharedPrefData: CurrentLocationData? = null
+
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var hourlyWeatherViewModel: HourlyWeatherViewModel
     private lateinit var currentLocationViewModel: CurrentLocationViewModel
@@ -112,12 +114,6 @@ class HomeFragment : Fragment() {
 
         binding.hourlyShimmerLayout.startShimmer()
 
-        //Observing the changes in settings
-        settingsDataObserver = Observer {
-            setSettingDataToUI(it)
-        }
-        SettingsLiveData.getSettingsLiveData().observe(requireActivity(), settingsDataObserver)
-
         //First get location then set the location data in local and in UI after that get weather data from API
         initCurrentLocationThing()
         initLocationSharedPrefThing()
@@ -127,21 +123,46 @@ class HomeFragment : Fragment() {
         initHourlyWeatherAPIThing()
 
         //Getting and setting data from LocationSharedPrefViewModel to UI
-        val locationSharedPrefData = locationSharedPrefViewModel.getData()
-        locationSharedPrefData?.let { setLocationDataToUI(locationSharedPrefData) }
+        locationSharedPrefData = locationSharedPrefViewModel.getData()
+        setLocationDataToUI(locationSharedPrefData!!)
 
         //Getting Data from Settings SharedPref
         settingsData = settingSharedPrefViewModel.getData() ?: SettingsData()
         setSettingDataToUI(settingsData)
 
+
+        //Observing the livedata from WeatherAPI
+        weatherViewModel.weatherLiveData.observe(requireActivity()) {
+            if(it != null) {
+                setWeatherDataToUI(it)
+                binding.next7days.isClickable = true
+                weatherSharedPrefViewModel.sendData(it)
+            }
+        }
+
         //Getting and setting data from WeatherSharedPref to UI
         val weatherData = weatherSharedPrefViewModel.getData()
         weatherData?.let { setWeatherDataToUI(it) }
 
+        //Observing the changes in settings
+        settingsDataObserver = Observer {
+            setSettingDataToUI(it)
+            if(it.weatherMusic) {
+                if(weatherData != null) {
+                    val musicURL = getWeatherMusicURL(weatherData.weather.first())
+                    startWeatherMusicService(musicURL)
+                }
+            } else {
+                val intent = Intent(requireActivity(), WeatherMusicService::class.java)
+                requireActivity().stopService(intent)
+            }
+        }
+        SettingsLiveData.getSettingsLiveData().observe(requireActivity(), settingsDataObserver)
+
         //Observing LiveData from CurrentLocationViewModel
         currentLocationViewModel.approximateLocationLiveData.observe(requireActivity()) {
             if(it != null) {
-                if(locationSharedPrefData == null || locationSharedPrefData.loc != it.loc && locationSharedPrefData.ip.isNotEmpty()) {
+                if(locationSharedPrefData == null || locationSharedPrefData!!.loc != it.loc && locationSharedPrefData!!.ip.isNotEmpty()) {
                     locationSharedPrefViewModel.sendData(it)
                     setLocationDataToUI(it)
                     callingWeatherAPI(it)
@@ -153,20 +174,12 @@ class HomeFragment : Fragment() {
         citiesDataObserver = Observer {
             val data = CurrentLocationData(it.name, it.country, "", "${it.lat},${it.lon}", "", it.state, "")
             locationSharedPrefViewModel.sendData(data)
+            locationSharedPrefData = locationSharedPrefViewModel.getData()
             setLocationDataToUI(data)
             callingWeatherAPI(data)
             callingHourlyWeatherAPI(data)
         }
         SearchCitiesLiveData.getCitiesLiveData().observe(requireActivity(), citiesDataObserver)
-
-        //Observing the livedata from WeatherAPI
-        weatherViewModel.weatherLiveData.observe(requireActivity()) {
-            if(it != null) {
-                setWeatherDataToUI(it)
-                binding.next7days.isClickable = true
-                weatherSharedPrefViewModel.sendData(it)
-            }
-        }
 
         //Observing the livedata from HourlyWeatherAPI
         hourlyWeatherViewModel.weatherLiveData.observe(requireActivity()) {
@@ -433,6 +446,26 @@ class HomeFragment : Fragment() {
             }
         }
         return false
+    }
+
+    private fun getWeatherMusicURL(weatherType: WeatherType): String {
+        if(weatherType.id in 200..232) { //Thunderstorm
+            return AppConstants.RAIN_MUSIC
+        } else if(weatherType.id in 300..321) { //Drizzle
+            return AppConstants.RAIN_MUSIC
+        } else if(weatherType.id in 500..531) { //Rain
+            return AppConstants.RAIN_MUSIC
+        } else if(weatherType.id in 701..781) { //Atmosphere
+            return AppConstants.ATMOSPHERIC_MUSIC
+        } else if(weatherType.id in 600..622) { //Snow
+            return AppConstants.SNOW_MUSIC
+        } else if(weatherType.id == 800) { //Clear
+            return AppConstants.SUN_MUSIC
+        } else if(weatherType.id in 801..804) { //Cloud
+            return AppConstants.CLOUD_MUSIC
+        } else {
+            return AppConstants.SUN_MUSIC
+        }
     }
 
     private fun isCurrentLocalTime(timeString: String): Boolean {

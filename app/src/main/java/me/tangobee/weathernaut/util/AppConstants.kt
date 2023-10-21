@@ -10,6 +10,7 @@ object AppConstants {
     //SharedPref data namet
     const val LOCATION_SHARED_PREF = "locationData"
     const val WEATHER_SHARED_PREF = "weatherData"
+    const val NEXT_SEVEN_WEATHER_SHARED_PREF = "upcomingDaysWeatherData"
     const val SETTINGS_SHARED_PREF = "settingsData"
 
     //Weather Music URLs

@@ -13,16 +13,20 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.data.RetrofitHelper
+import me.tangobee.weathernaut.data.local.UpcomingDaysSharedPrefService
 import me.tangobee.weathernaut.data.remote.NextSevenDaysWeatherService
 import me.tangobee.weathernaut.data.repository.NextSevenDaysWeatherRepository
+import me.tangobee.weathernaut.data.repository.UpcomingDaysSharedPrefRepository
 import me.tangobee.weathernaut.databinding.FragmentUpcomingDaysBinding
-import me.tangobee.weathernaut.model.nextweathermodel.nextsevendays.NextSevenDaysWeatherModel
+import me.tangobee.weathernaut.model.nextweathermodel.nextsevendays.NextSevenDaysWeather
 import me.tangobee.weathernaut.util.AppConstants
 import me.tangobee.weathernaut.util.InternetConnection
 import me.tangobee.weathernaut.util.TimeUtil
 import me.tangobee.weathernaut.util.WeatherCodeToIcon
 import me.tangobee.weathernaut.viewmodel.NextSevenDaysWeatherViewModel
+import me.tangobee.weathernaut.viewmodel.UpcomingDaysSharedPrefViewModel
 import me.tangobee.weathernaut.viewmodel.viewmodelfactory.NextSevenDaysWeatherViewModelFactory
+import me.tangobee.weathernaut.viewmodel.viewmodelfactory.UpcomingDaysSharedPrefViewModelFactory
 import java.util.TimeZone
 
 class UpcomingDaysFragment : Fragment() {
@@ -30,6 +34,7 @@ class UpcomingDaysFragment : Fragment() {
     private lateinit var binding: FragmentUpcomingDaysBinding
 
     private lateinit var next7DaysWeatherViewModel: NextSevenDaysWeatherViewModel
+    private lateinit var upcomingDaysSharedPrefViewModel: UpcomingDaysSharedPrefViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,18 +53,36 @@ class UpcomingDaysFragment : Fragment() {
         val lon = args.lon
 
         initNext7DaysWeather()
+        initUpcomingDaysSharedPref()
+
         callingNext7DaysWeatherAPI(lat, lon)
 
-        //TODO("Store all the next 7 days weather data in sharedPref and set them in to UI")
+        val weatherData = getUpcomingWeatherSharedPrefData()
+
+        if(weatherData != null) {
+            setNext7DaysWeatherToUI(weatherData)
+        }
 
 
         next7DaysWeatherViewModel.weatherLiveData.observe(requireActivity()) {
             if(it != null) {
-                setNext7DaysWeatherToUI(it)
+                setNext7DaysWeatherToUI(it.daily)
+                sendDataToSharedPref(it.daily)
             }
         }
 
         binding.back.setOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
+    }
+
+    private fun getUpcomingWeatherSharedPrefData(): NextSevenDaysWeather? {
+        return upcomingDaysSharedPrefViewModel.getData()
+    }
+
+    private fun initUpcomingDaysSharedPref() {
+        val service = UpcomingDaysSharedPrefService(requireActivity())
+        val repository = UpcomingDaysSharedPrefRepository(service)
+
+        upcomingDaysSharedPrefViewModel = ViewModelProvider(requireActivity(), UpcomingDaysSharedPrefViewModelFactory(repository))[UpcomingDaysSharedPrefViewModel::class.java]
     }
 
     private fun initNext7DaysWeather() {
@@ -97,48 +120,51 @@ class UpcomingDaysFragment : Fragment() {
         }
     }
 
-    private fun setNext7DaysWeatherToUI(weatherData: NextSevenDaysWeatherModel) {
-        val weather = weatherData.daily
-        val tomorrowTemp = (weather.temperature_2m_max[1]+weather.temperature_2m_min[1])/2
-        binding.tomorrowWeatherValue.text = tomorrowTemp.toInt().toString()
+    private fun sendDataToSharedPref(weatherData: NextSevenDaysWeather) {
+        upcomingDaysSharedPrefViewModel.sendData(weatherData)
+    }
+
+    private fun setNext7DaysWeatherToUI(weather: NextSevenDaysWeather) {
+        val tomorrowTemp = "${weather.temperature_2m_min[1].toInt()}/${weather.temperature_2m_max[1].toInt()}"
+        binding.tomorrowWeatherValue.text = tomorrowTemp
         val tomorrowWeatherIcon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[1])
         binding.tomorrowWeatherIcon.setImageResource(tomorrowWeatherIcon)
         binding.tomorrowSunrise.text = TimeUtil.extractTimeFromString(weather.sunrise[1])
         binding.tomorrowSunset.text = TimeUtil.extractTimeFromString(weather.sunset[1])
 
 
-        val day2Temp = (weather.temperature_2m_max[2]+weather.temperature_2m_min[2])/2
-        binding.weather1Value.text = day2Temp.toInt().toString()
+        val day2Temp = "${weather.temperature_2m_min[2].toInt()}/${weather.temperature_2m_max[2].toInt()}"
+        binding.weather1Value.text = day2Temp
         val weather2Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[2])
         binding.weather1Icon.setImageResource(weather2Icon)
         binding.weather1Day.text = TimeUtil.convertDateStringToDay(weather.time[2])
 
-        val day3Temp = (weather.temperature_2m_max[3]+weather.temperature_2m_min[3])/2
-        binding.weather2Value.text = day3Temp.toInt().toString()
+        val day3Temp = "${weather.temperature_2m_min[3].toInt()}/${weather.temperature_2m_max[3].toInt()}"
+        binding.weather2Value.text = day3Temp
         val weather3Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[3])
         binding.weather2Icon.setImageResource(weather3Icon)
         binding.weather2Day.text = TimeUtil.convertDateStringToDay(weather.time[3])
 
-        val day4Temp = (weather.temperature_2m_max[4]+weather.temperature_2m_min[4])/2
-        binding.weather3Value.text = day4Temp.toInt().toString()
+        val day4Temp = "${weather.temperature_2m_min[4].toInt()}/${weather.temperature_2m_max[4].toInt()}"
+        binding.weather3Value.text = day4Temp
         val weather4Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[4])
         binding.weather3Icon.setImageResource(weather4Icon)
         binding.weather3Day.text = TimeUtil.convertDateStringToDay(weather.time[4])
 
-        val day5Temp = (weather.temperature_2m_max[5]+weather.temperature_2m_min[5])/2
-        binding.weather4Value.text = day5Temp.toInt().toString()
+        val day5Temp = "${weather.temperature_2m_min[5].toInt()}/${weather.temperature_2m_max[5].toInt()}"
+        binding.weather4Value.text = day5Temp
         val weather5Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[5])
         binding.weather4Icon.setImageResource(weather5Icon)
         binding.weather4Day.text = TimeUtil.convertDateStringToDay(weather.time[5])
 
-        val day6Temp = (weather.temperature_2m_max[6]+weather.temperature_2m_min[6])/2
-        binding.weather5Value.text = day6Temp.toInt().toString()
+        val day6Temp = "${weather.temperature_2m_min[6].toInt()}/${weather.temperature_2m_max[6].toInt()}"
+        binding.weather5Value.text = day6Temp
         val weather6Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[6])
         binding.weather5Icon.setImageResource(weather6Icon)
         binding.weather5Day.text = TimeUtil.convertDateStringToDay(weather.time[6])
 
-        val day7Temp = (weather.temperature_2m_max[7]+weather.temperature_2m_min[7])/2
-        binding.weather6Value.text = day7Temp.toInt().toString()
+        val day7Temp = "${weather.temperature_2m_min[7].toInt()}/${weather.temperature_2m_max[7].toInt()}"
+        binding.weather6Value.text = day7Temp
         val weather7Icon = WeatherCodeToIcon.getWeatherIcon(weather.weathercode[7])
         binding.weather6Icon.setImageResource(weather7Icon)
         binding.weather6Day.text = TimeUtil.convertDateStringToDay(weather.time[7])
