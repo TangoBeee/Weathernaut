@@ -183,6 +183,10 @@ class SearchActivity : AppCompatActivity() {
             }
         })
 
+        binding.locateMe.setOnClickListener {
+            Toast.makeText(this@SearchActivity, "Coming Soon...", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     private fun removeDiacritics(input: String): String {
