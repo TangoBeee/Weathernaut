@@ -319,21 +319,6 @@
                     android:paddingHorizontal="@dimen/_20sdp" />
 
                 <TextView
-                    android:id="@+id/termsAndConditions"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:drawableEndCompat="@drawable/icon_right_arrow"
-                    android:text="@string/terms_amp_conditions"
-                    android:fontFamily="@font/inter_medium"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_13ssp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp" />
-
-                <TextView
                     android:id="@+id/privacyPolicy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

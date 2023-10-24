@@ -86,8 +86,6 @@ class HomeFragment : Fragment() {
     private lateinit var settingsDataObserver: Observer<SettingsData>
     private lateinit var citiesDataObserver: Observer<CityLocationDataItem>
 
-    private var locationSharedPrefData: CurrentLocationData? = null
-
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var hourlyWeatherViewModel: HourlyWeatherViewModel
     private lateinit var currentLocationViewModel: CurrentLocationViewModel
@@ -123,8 +121,8 @@ class HomeFragment : Fragment() {
         initHourlyWeatherAPIThing()
 
         //Getting and setting data from LocationSharedPrefViewModel to UI
-        locationSharedPrefData = locationSharedPrefViewModel.getData()
-        setLocationDataToUI(locationSharedPrefData!!)
+        var locationSharedPrefData = locationSharedPrefViewModel.getData()
+        locationSharedPrefData?.let { setLocationDataToUI(it) }
 
         //Getting Data from Settings SharedPref
         settingsData = settingSharedPrefViewModel.getData() ?: SettingsData()
@@ -135,7 +133,6 @@ class HomeFragment : Fragment() {
         weatherViewModel.weatherLiveData.observe(requireActivity()) {
             if(it != null) {
                 setWeatherDataToUI(it)
-                binding.next7days.isClickable = true
                 weatherSharedPrefViewModel.sendData(it)
             }
         }
@@ -164,6 +161,7 @@ class HomeFragment : Fragment() {
             if(it != null) {
                 if(locationSharedPrefData == null || locationSharedPrefData!!.loc != it.loc && locationSharedPrefData!!.ip.isNotEmpty()) {
                     locationSharedPrefViewModel.sendData(it)
+                    locationSharedPrefData = it
                     setLocationDataToUI(it)
                     callingWeatherAPI(it)
                     callingHourlyWeatherAPI(it)
@@ -194,7 +192,11 @@ class HomeFragment : Fragment() {
 
         binding.settings.setOnClickListener { moveToSettings() }
         binding.search.setOnClickListener {moveToSearch()}
-        binding.next7days.setOnClickListener { navToUpcomingDaysFrag(locationSharedPrefData?.loc!!) }
+        binding.next7days.setOnClickListener { locationSharedPrefData?.loc?.let { it1 ->
+            navToUpcomingDaysFrag(
+                it1
+            )
+        } }
         binding.today.setOnClickListener { changeWeatherToToday() }
         binding.tomorrow.setOnClickListener { changeWeatherToTomorrow() }
     }

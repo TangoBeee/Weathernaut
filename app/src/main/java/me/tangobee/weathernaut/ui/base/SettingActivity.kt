@@ -46,7 +46,6 @@ class SettingActivity : AppCompatActivity() {
         binding.atmosphericPressureUnit.setOnClickListener {showAtmosphericPressureUnitPopup(binding.atmosphericPressureSpinner)}
 
         binding.feedback.setOnClickListener { openURL(Uri.parse("mailto:feedback.weathernaut@gmail.com?subject=Feedback on Weathernaut app.")) }
-        binding.termsAndConditions.setOnClickListener { openURL(Uri.parse("https://tangobee.netlify.app/Weathernaut/terms-and-conditions")) }
         binding.privacyPolicy.setOnClickListener { openURL(Uri.parse("https://tangobee.netlify.app/Weathernaut/privacy-policy")) }
         binding.soundEffect.setOnClickListener {
             val flag = binding.soundEffectSwitch.isChecked

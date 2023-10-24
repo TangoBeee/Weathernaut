@@ -324,7 +324,6 @@
             android:id="@+id/next7days"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="false"
             app:drawableEndCompat="@drawable/icon_right_arrow"
             app:drawableTint="#4B4B4B"
             android:drawablePadding="@dimen/_10sdp"
