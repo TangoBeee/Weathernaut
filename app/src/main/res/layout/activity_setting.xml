@@ -186,7 +186,7 @@
                         app:drawableEndCompat="@drawable/icon_dropdown"
                         app:drawableTint="@color/defaultColor"
                         android:drawablePadding="@dimen/_5sdp"
-                        android:text="@string/atm"
+                        android:text="@string/hPa"
                         android:textColor="@color/defaultColor"
                         android:fontFamily="@font/inter"
                         android:layout_weight="1"

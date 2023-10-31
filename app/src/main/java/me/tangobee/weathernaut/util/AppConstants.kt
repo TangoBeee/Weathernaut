@@ -7,18 +7,24 @@ object AppConstants {
     //SharedPref name
     const val SHARED_PREF_NAME = "weathernautData"
 
-    //SharedPref data namet
+    //SharedPref data name
     const val LOCATION_SHARED_PREF = "locationData"
     const val WEATHER_SHARED_PREF = "weatherData"
     const val NEXT_SEVEN_WEATHER_SHARED_PREF = "upcomingDaysWeatherData"
     const val SETTINGS_SHARED_PREF = "settingsData"
 
     //Weather Music URLs
-    const val CLOUD_MUSIC = "https://cdn.pixabay.com/download/audio/2021/11/21/audio_28c0ab46c1.mp3"
-    const val ATMOSPHERIC_MUSIC = "https://cdn.pixabay.com/download/audio/2023/03/19/audio_1fa6409fc8.mp3"
-    const val SUN_MUSIC = "https://cdn.pixabay.com/download/audio/2022/02/12/audio_8ca49a7f20.mp3"
-    const val SNOW_MUSIC = "https://cdn.pixabay.com/download/audio/2021/11/23/audio_167b09f2b0.mp3"
-    const val RAIN_MUSIC = "https://cdn.pixabay.com/download/audio/2022/07/06/audio_bafec9fdb3.mp3"
+//    const val CLOUD_MUSIC = "https://cdn.pixabay.com/download/audio/2021/11/21/audio_28c0ab46c1.mp3"
+//    const val ATMOSPHERIC_MUSIC = "https://cdn.pixabay.com/download/audio/2023/03/19/audio_1fa6409fc8.mp3"
+//    const val SUN_MUSIC = "https://cdn.pixabay.com/download/audio/2022/02/12/audio_8ca49a7f20.mp3"
+//    const val SNOW_MUSIC = "https://cdn.pixabay.com/download/audio/2021/11/23/audio_167b09f2b0.mp3"
+//    const val RAIN_MUSIC = "https://cdn.pixabay.com/download/audio/2022/07/06/audio_bafec9fdb3.mp3"
+
+    const val CLOUD_MUSIC = "https://gusty-full-lens.glitch.me/weather/cloudy.mp3"
+    const val ATMOSPHERIC_MUSIC = "https://gusty-full-lens.glitch.me/weather/atmospheric.mp3"
+    const val SUN_MUSIC = "https://gusty-full-lens.glitch.me/weather/sunny.mp3"
+    const val SNOW_MUSIC = "https://gusty-full-lens.glitch.me/weather/snowy.mp3"
+    const val RAIN_MUSIC = "https://gusty-full-lens.glitch.me/weather/rainy.mp3"
 
     //Base URLs
     const val OpenWeatherMap_API_BASE_URL = "https://api.openweathermap.org/"

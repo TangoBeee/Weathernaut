@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -486,8 +485,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun changeWeatherToToday() {
-        val todayTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter_bold)
-        val tomorrowTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter)
+        val todayTypeface: Typeface = Typeface.createFromAsset(requireActivity().assets, "fonts/Inter-Bold.ttf")
+        val tomorrowTypeface: Typeface = Typeface.createFromAsset(requireActivity().assets, "fonts/Inter-Regular.ttf")
 
         binding.today.typeface = todayTypeface
         binding.tomorrow.typeface = tomorrowTypeface
@@ -510,9 +509,8 @@ class HomeFragment : Fragment() {
 
     private fun changeWeatherToTomorrow() {
         if(::hourlyWeatherData.isInitialized) {
-            val tomorrowTypeface: Typeface? =
-                ResourcesCompat.getFont(requireActivity(), R.font.inter_bold)
-            val todayTypeface: Typeface? = ResourcesCompat.getFont(requireActivity(), R.font.inter)
+            val tomorrowTypeface: Typeface = Typeface.createFromAsset(requireActivity().assets, "fonts/Inter-Bold.ttf")
+            val todayTypeface: Typeface = Typeface.createFromAsset(requireActivity().assets, "fonts/Inter-Regular.ttf")
 
             binding.tomorrow.typeface = tomorrowTypeface
             binding.today.typeface = todayTypeface
