@@ -47,6 +47,7 @@ class SettingActivity : AppCompatActivity() {
 
         binding.feedback.setOnClickListener { openURL(Uri.parse("mailto:feedback.weathernaut@gmail.com?subject=Feedback on Weathernaut app.")) }
         binding.privacyPolicy.setOnClickListener { openURL(Uri.parse("https://tangobee.netlify.app/Weathernaut/privacy-policy")) }
+        binding.credits.setOnClickListener { openURL(Uri.parse("https://tangobee.netlify.app/Weathernaut/credits")) }
         binding.soundEffect.setOnClickListener {
             val flag = binding.soundEffectSwitch.isChecked
             binding.soundEffectSwitch.setChecked(!flag)

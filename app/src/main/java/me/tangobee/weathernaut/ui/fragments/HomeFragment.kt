@@ -169,7 +169,8 @@ class HomeFragment : Fragment() {
         }
 
         citiesDataObserver = Observer {
-            val data = CurrentLocationData(it.name, it.country, "", "${it.lat},${it.lon}", "", it.state, "")
+            val state = it.state ?: ""
+            val data = CurrentLocationData(it.name, it.country, "", "${it.lat},${it.lon}", "", state, "")
             locationSharedPrefViewModel.sendData(data)
             locationSharedPrefData = locationSharedPrefViewModel.getData()
             setLocationDataToUI(data)

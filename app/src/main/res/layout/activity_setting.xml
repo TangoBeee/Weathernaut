@@ -331,6 +331,21 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15sdp"
+                    android:paddingHorizontal="@dimen/_20sdp"/>
+
+                <TextView
+                    android:id="@+id/credits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:drawableEndCompat="@drawable/icon_right_arrow"
+                    android:text="@string/credit"
+                    android:fontFamily="@font/inter_medium"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingVertical="@dimen/_15sdp"
                     android:paddingHorizontal="@dimen/_20sdp"
                     android:layout_marginBottom="100dp"/>
 
