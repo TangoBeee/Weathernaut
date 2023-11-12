@@ -15,17 +15,14 @@ android {
 
     signingConfigs {
         release {
-<<<<<<< HEAD
             storeFile file('/PATH/FOR/THE/keystore.jks')
             storePassword '<PASSWORD>'
             keyAlias '<KEY>'
             keyPassword '<PASSWORD>'
-=======
             storeFile file(signingProps['storeFile'])
             storePassword signingProps['storePassword']
             keyAlias signingProps['keyAlias']
             keyPassword signingProps['keyPassword']
->>>>>>> 3ce3429 (Some minor changes)
         }
     }
 
