@@ -5,3 +5,5 @@ A Weather application for Android devices using OpenWeatherMap API.
 
 
 Background Music Backend: [GitHub Repo](https://github.com/TangoBeee/Weathernaut-Music-Server)
+
+Credits: [Click here](https://tangobee.netlify.app/Weathernaut/credits)
