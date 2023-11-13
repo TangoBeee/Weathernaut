@@ -46,6 +46,11 @@
 
 # Click here -> [credit-link]
 
+
+**Backend**
+
+# Click here -> [background-music]
+
 # License
     MIT License
     
@@ -81,4 +86,5 @@
 [SSP]: https://github.com/intuit/ssp
 [Switcher]: https://github.com/bitvale/Switcher
 [Shimmer]: https://github.com/facebookarchive/shimmer-android
+[background-music]: https://github.com/tangobeee/Weathernaut-Music-Server
 [Release]: https://github.com/tangobeee/Weathernaut/releases
