@@ -66,11 +66,12 @@ class SearchActivity : AppCompatActivity() {
                 for(city in citiesList) {
                     if(locationSharedPrefData != null &&
                         areEqualIgnoringDiacritics(city.name, locationSharedPrefData.city) &&
-                        areEqualIgnoringDiacritics(city.country, locationSharedPrefData.country) &&
-                        areEqualIgnoringDiacritics(city.state, locationSharedPrefData.region))
-                    {
-                        city.alreadyExist = true
-                        break
+                        areEqualIgnoringDiacritics(city.country, locationSharedPrefData.country)
+                    ) {
+                        if(city.state.isNullOrEmpty() || areEqualIgnoringDiacritics(city.state, locationSharedPrefData.region)) {
+                            city.alreadyExist = true
+                            break
+                        }
                     }
                 }
 
@@ -190,6 +191,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun removeDiacritics(input: String): String {
+        if(input.isEmpty()) return ""
         val normalizedString = Normalizer.normalize(input, Normalizer.Form.NFD)
         return "\\p{InCombiningDiacriticalMarks}+".toRegex().replace(normalizedString, "")
     }
