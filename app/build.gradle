@@ -30,7 +30,7 @@ android {
         applicationId "me.tangobee.weathernaut"
         minSdk 24
         targetSdk 33
-        versionCode 4
+        versionCode 5
         versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
