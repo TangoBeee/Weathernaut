@@ -32,7 +32,7 @@ class SearchCitiesAdapter(private val citiesList: CityLocationData) : Adapter<Se
 
         holder.cityName.text = citiesList[position].name
 
-        val location = citiesList[position].state + ", " + CountryNameByCode.getCountryNameByCode(context, citiesList[position].country)
+        val location = (if(citiesList[position].state.isNullOrEmpty()) "" else (citiesList[position].state + ", ")) + CountryNameByCode.getCountryNameByCode(context, citiesList[position].country)
         holder.cityAddress.text = location
 
         if(citiesList[position].alreadyExist) {
