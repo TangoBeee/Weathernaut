@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import me.tangobee.weathernaut.BuildConfig
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.HorizontalWeatherAdapter
 import me.tangobee.weathernaut.data.RetrofitHelper
@@ -206,21 +207,47 @@ class HomeFragment : Fragment() {
         if(loc != null) {
             val lat = loc[0]
             val lon = loc[1]
-            if(InternetConnection.isNetworkAvailable(requireActivity())) {
-                lifecycleScope.launch {
-                    hourlyWeatherViewModel.getWeather(lat, lon, AppConstants.HOURLY_WEATHER_QUERY, AppConstants.HOURLY_WEATHER_CODE, AppConstants.HOURLY_WEATHER_DAYS_LIMIT, TimeZone.getDefault().id)
-                }
-            } else {
-                val snackBar = Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
-                snackBar.setAction(R.string.try_again) {
-                    if(InternetConnection.isNetworkAvailable(requireActivity())) {
-                        lifecycleScope.launch {
-                            hourlyWeatherViewModel.getWeather(lat, lon, AppConstants.HOURLY_WEATHER_QUERY, AppConstants.HOURLY_WEATHER_CODE, AppConstants.HOURLY_WEATHER_DAYS_LIMIT, TimeZone.getDefault().id)
-                        }
-                    } else {
-                        Toast.makeText(requireActivity(), "No internet connection. Please try later.", Toast.LENGTH_SHORT).show()
+            lifecycleScope.launch {
+                if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                    lifecycleScope.launch {
+                        hourlyWeatherViewModel.getWeather(
+                            lat,
+                            lon,
+                            AppConstants.HOURLY_WEATHER_QUERY,
+                            AppConstants.HOURLY_WEATHER_CODE,
+                            AppConstants.HOURLY_WEATHER_DAYS_LIMIT,
+                            TimeZone.getDefault().id
+                        )
                     }
-                }.show()
+                } else {
+                    val snackBar = Snackbar.make(
+                        requireView(),
+                        "No internet connection.",
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                    snackBar.setAction(R.string.try_again) {
+                        lifecycleScope.launch {
+                            if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                                lifecycleScope.launch {
+                                    hourlyWeatherViewModel.getWeather(
+                                        lat,
+                                        lon,
+                                        AppConstants.HOURLY_WEATHER_QUERY,
+                                        AppConstants.HOURLY_WEATHER_CODE,
+                                        AppConstants.HOURLY_WEATHER_DAYS_LIMIT,
+                                        TimeZone.getDefault().id
+                                    )
+                                }
+                            } else {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    "No internet connection. Please try later.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }.show()
+                }
             }
         }
     }
@@ -230,21 +257,38 @@ class HomeFragment : Fragment() {
         if(loc != null) {
             val lat = loc[0]
             val lon = loc[1]
-            if(InternetConnection.isNetworkAvailable(requireActivity())) {
-                lifecycleScope.launch {
-                    weatherViewModel.getWeather(lat, lon, resources.getString(R.string.api_key))
-                }
-            } else {
-                val snackBar = Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
-                snackBar.setAction(R.string.try_again) {
-                    if(InternetConnection.isNetworkAvailable(requireActivity())) {
-                        lifecycleScope.launch {
-                            weatherViewModel.getWeather(lat, lon, resources.getString(R.string.api_key))
-                        }
-                    } else {
-                        Toast.makeText(requireActivity(), "No internet connection. Please try later.", Toast.LENGTH_SHORT).show()
+
+            lifecycleScope.launch {
+                if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                    lifecycleScope.launch {
+                        weatherViewModel.getWeather(lat, lon, BuildConfig.apiKey)
                     }
-                }.show()
+                } else {
+                    val snackBar = Snackbar.make(
+                        requireView(),
+                        "No internet connection.",
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                    snackBar.setAction(R.string.try_again) {
+                        lifecycleScope.launch {
+                            if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                                lifecycleScope.launch {
+                                    weatherViewModel.getWeather(
+                                        lat,
+                                        lon,
+                                        BuildConfig.apiKey
+                                    )
+                                }
+                            } else {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    "No internet connection. Please try later.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }.show()
+                }
             }
         }
     }
@@ -595,26 +639,34 @@ class HomeFragment : Fragment() {
         currentLocationViewModel = ViewModelProvider(requireActivity(), CurrentLocationViewModelFactory(currentLocationRepository))[CurrentLocationViewModel::class.java]
 
         //Calling API to get current location
-        if(InternetConnection.isNetworkAvailable(requireActivity())) {
-            lifecycleScope.launch {
-                currentLocationViewModel.getLocation()
-            }
-        } else {
-            val snackBar =
-                Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
-            snackBar.setAction(R.string.try_again) {
-                if (InternetConnection.isNetworkAvailable(requireActivity())) {
-                    lifecycleScope.launch {
-                        currentLocationViewModel.getLocation()
-                    }
-                } else {
-                    Toast.makeText(
-                        requireActivity(),
-                        "No internet connection. Please try later.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+        lifecycleScope.launch {
+            if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                lifecycleScope.launch {
+                    currentLocationViewModel.getLocation()
                 }
-            }.show()
+            } else {
+                val snackBar =
+                    Snackbar.make(
+                        requireView(),
+                        "No internet connection.",
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                snackBar.setAction(R.string.try_again) {
+                    lifecycleScope.launch {
+                        if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                            lifecycleScope.launch {
+                                currentLocationViewModel.getLocation()
+                            }
+                        } else {
+                            Toast.makeText(
+                                requireActivity(),
+                                "No internet connection. Please try later.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }.show()
+            }
         }
     }
 

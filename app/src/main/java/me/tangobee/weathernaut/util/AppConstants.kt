@@ -20,11 +20,11 @@ object AppConstants {
 //    const val SNOW_MUSIC = "https://cdn.pixabay.com/download/audio/2021/11/23/audio_167b09f2b0.mp3"
 //    const val RAIN_MUSIC = "https://cdn.pixabay.com/download/audio/2022/07/06/audio_bafec9fdb3.mp3"
 
-    const val CLOUD_MUSIC = "https://gusty-full-lens.zonebattle90.repl.co/weather/cloudy.mp3"
-    const val ATMOSPHERIC_MUSIC = "https://gusty-full-lens.zonebattle90.repl.co/weather/atmospheric.mp3"
-    const val SUN_MUSIC = "https://gusty-full-lens.zonebattle90.repl.co/weather/sunny.mp3"
-    const val SNOW_MUSIC = "https://gusty-full-lens.zonebattle90.repl.co/weather/snowy.mp3"
-    const val RAIN_MUSIC = "https://gusty-full-lens.zonebattle90.repl.co/weather/rainy.mp3"
+    const val CLOUD_MUSIC = "https://weathernaut-music-server.onrender.com/weather/cloudy.mp3"
+    const val ATMOSPHERIC_MUSIC = "https://weathernaut-music-server.onrender.com/weather/atmospheric.mp3"
+    const val SUN_MUSIC = "https://weathernaut-music-server.onrender.com/weather/sunny.mp3"
+    const val RAIN_MUSIC = "https://weathernaut-music-server.onrender.com/weather/rainy.mp3"
+    const val SNOW_MUSIC = "https://weathernaut-music-server.onrender.com/weather/snowy.mp3"
 
     //Base URLs
     const val OpenWeatherMap_API_BASE_URL = "https://api.openweathermap.org/"

@@ -97,26 +97,46 @@ class UpcomingDaysFragment : Fragment() {
     private fun callingNext7DaysWeatherAPI(lat: String, lon: String) {
         val dailyParameters = listOf("weathercode", "temperature_2m_max", "temperature_2m_min", "sunrise", "sunset")
 
-        if(InternetConnection.isNetworkAvailable(requireActivity())) {
-            lifecycleScope.launch {
-                next7DaysWeatherViewModel.getWeather(lat, lon, dailyParameters, TimeZone.getDefault().id, AppConstants.NEXT7DAYS_WEATHER_DAYS_LIMIT)
-            }
-        } else {
-            val snackBar =
-                Snackbar.make(requireView(), "No internet connection.", Snackbar.LENGTH_INDEFINITE)
-            snackBar.setAction(R.string.try_again) {
-                if (InternetConnection.isNetworkAvailable(requireActivity())) {
-                    lifecycleScope.launch {
-                        next7DaysWeatherViewModel.getWeather(lat, lon, dailyParameters, TimeZone.getDefault().id, AppConstants.NEXT7DAYS_WEATHER_DAYS_LIMIT)
-                    }
-                } else {
-                    Toast.makeText(
-                        requireActivity(),
-                        "No internet connection. Please try later.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+        lifecycleScope.launch {
+            if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                lifecycleScope.launch {
+                    next7DaysWeatherViewModel.getWeather(
+                        lat,
+                        lon,
+                        dailyParameters,
+                        TimeZone.getDefault().id,
+                        AppConstants.NEXT7DAYS_WEATHER_DAYS_LIMIT
+                    )
                 }
-            }.show()
+            } else {
+                val snackBar =
+                    Snackbar.make(
+                        requireView(),
+                        "No internet connection.",
+                        Snackbar.LENGTH_INDEFINITE
+                    )
+                snackBar.setAction(R.string.try_again) {
+                    lifecycleScope.launch {
+                        if (InternetConnection.isNetworkAvailable(requireActivity())) {
+                            lifecycleScope.launch {
+                                next7DaysWeatherViewModel.getWeather(
+                                    lat,
+                                    lon,
+                                    dailyParameters,
+                                    TimeZone.getDefault().id,
+                                    AppConstants.NEXT7DAYS_WEATHER_DAYS_LIMIT
+                                )
+                            }
+                        } else {
+                            Toast.makeText(
+                                requireActivity(),
+                                "No internet connection. Please try later.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }.show()
+            }
         }
     }
 

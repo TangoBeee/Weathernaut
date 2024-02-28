@@ -26,14 +26,23 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
     defaultConfig {
         applicationId "me.tangobee.weathernaut"
         minSdk 24
         targetSdk 33
-        versionCode 7
-        versionName "1.2"
+        versionCode 8
+        versionName "1.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        buildConfigField("String", "apiKey", "${properties.getProperty("apiKey")}")
     }
 
     buildTypes {
@@ -44,10 +53,6 @@ android {
             shrinkResources false
             signingConfig signingConfigs.release
         }
-    }
-
-    buildFeatures {
-        viewBinding true
     }
 
     compileOptions {

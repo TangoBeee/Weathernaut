@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import me.tangobee.weathernaut.BuildConfig
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.adapter.SearchCitiesAdapter
 import me.tangobee.weathernaut.data.RetrofitHelper
@@ -121,36 +122,43 @@ class SearchActivity : AppCompatActivity() {
                         binding.searchPlaceholderTV.text = getString(R.string.search_your_city)
                     } else {
                         binding.searchPlaceholderTV.text = getString(R.string.searching)
-                        if(InternetConnection.isNetworkAvailable(this@SearchActivity)) {
-                            lifecycleScope.launch(Dispatchers.IO) {
-                                geoLocationViewModel.getLocation(
-                                    query,
-                                    AppConstants.CITY_LIMITS,
-                                    resources.getString(R.string.api_key)
-                                )
-                            }
-                        } else {
-                            val snackBar =
-                                Snackbar.make(binding.root, "No internet connection.", Snackbar.LENGTH_INDEFINITE)
-                            snackBar.setAction(R.string.try_again) {
-                                if (InternetConnection.isNetworkAvailable(this@SearchActivity)) {
-                                    lifecycleScope.launch {
-                                        geoLocationViewModel.getLocation(
-                                            query,
-                                            AppConstants.CITY_LIMITS,
-                                            resources.getString(R.string.api_key)
-                                        )
-                                    }
-                                } else {
-                                    Toast.makeText(
-                                        this@SearchActivity,
-                                        "No internet connection. Please try later.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                        lifecycleScope.launch {
+                            if (InternetConnection.isNetworkAvailable(this@SearchActivity)) {
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    geoLocationViewModel.getLocation(
+                                        query,
+                                        AppConstants.CITY_LIMITS,
+                                        BuildConfig.apiKey
+                                    )
                                 }
-                            }.show()
+                            } else {
+                                val snackBar =
+                                    Snackbar.make(
+                                        binding.root,
+                                        "No internet connection.",
+                                        Snackbar.LENGTH_INDEFINITE
+                                    )
+                                snackBar.setAction(R.string.try_again) {
+                                    lifecycleScope.launch {
+                                        if (InternetConnection.isNetworkAvailable(this@SearchActivity)) {
+                                            lifecycleScope.launch {
+                                                geoLocationViewModel.getLocation(
+                                                    query,
+                                                    AppConstants.CITY_LIMITS,
+                                                    BuildConfig.apiKey
+                                                )
+                                            }
+                                        } else {
+                                            Toast.makeText(
+                                                this@SearchActivity,
+                                                "No internet connection. Please try later.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                }.show()
+                            }
                         }
-
                     }
                 } else {
                     binding.locateMe.visibility = View.VISIBLE

@@ -2,26 +2,35 @@ package me.tangobee.weathernaut.util
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.net.InetSocketAddress
+import java.net.Socket
 
-class InternetConnection() {
+
+class InternetConnection {
 
     companion object {
-        fun isNetworkAvailable(context: Context): Boolean {
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        suspend fun isNetworkAvailable(context: Context): Boolean {
+            return withContext(Dispatchers.IO) {
+                try {
+                    // Check if the device is connected to a network
+                    val connectivityManager =
+                        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                    connectivityManager.activeNetwork ?: return@withContext false
 
-            val networkManager = connectivityManager.activeNetwork ?: return false
-            val activeNetwork = connectivityManager.getNetworkCapabilities(networkManager) ?: return false
-            return when {
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                //for other device how are able to connect with Ethernet
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                //for check internet over Bluetooth
-                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
-                else -> false
+                    // Check if the device has a working internet connection
+                    val socket = Socket()
+                    val socketAddress = InetSocketAddress("8.8.8.8", 53) // Google's DNS server
+                    socket.connect(socketAddress, 1500)
+                    socket.close()
+
+                    true
+                } catch (e: IOException) {
+                    false
+                }
             }
         }
     }
-
 }
