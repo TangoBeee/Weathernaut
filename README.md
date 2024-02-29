@@ -2,6 +2,7 @@
 
 [![Releases](https://img.shields.io/github/v/release/tangobeee/Weathernaut.svg)](https://github.com/tangobeee/Weathernaut/releases/latest)
 ![GitHub](https://img.shields.io/github/license/tangobeee/weathernaut)
+![Release version on IzzyOnDroid](https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/me.tangobee.weathernaut)
 
 <p align="center"><img src="assets/Flat-cover.png" /></p>
 
@@ -19,6 +20,9 @@
 - Background Lofi Music
 - Use locale Database
 
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+      alt="Download from IzzyOnDroid"
+      height="80">](https://apt.izzysoft.de/fdroid/index/apk/me.tangobee.weathernaut/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
       alt="Download from Google Play"
       height="80">](https://play.google.com/store/apps/details?id=me.tangobee.weathernaut)
