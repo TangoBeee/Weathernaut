@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="textColor">#313341</color>
+    <color name="upcomingTimeColor">#9C9EAA</color>
+    <color name="placeholderColor">#808080</color>
+    <color name="unselectedIndicatorColor">#D6996B</color>
+    <color name="indicatorSeparatorColor">#E2A272</color>
 </resources>

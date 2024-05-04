@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_15sdp"
+    android:padding="@dimen/_15sdp"
+    android:background="@drawable/rounded_blurry_box">
+
+    <TextView
+        android:id="@+id/nextWeatherDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_semibold"
+        android:gravity="center"
+        android:text="Thursday"
+        android:textColor="@color/textColor"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@id/nextWeatherIcon"
+        android:layout_alignBottom="@id/nextWeatherIcon" />
+
+    <TextView
+        android:id="@+id/nextWeatherTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_13sdp"
+        android:text="31°"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:layout_toStartOf="@id/nextWeatherIcon"
+        android:layout_alignTop="@id/nextWeatherIcon"
+        android:layout_alignBottom="@id/nextWeatherIcon" />
+
+    <ImageView
+        android:id="@+id/nextWeatherIcon"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:src="@drawable/icon_weather_sun"
+        android:contentDescription="@string/weather_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

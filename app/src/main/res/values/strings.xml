@@ -3,4 +3,32 @@
 
     <string name="api_fetching_error">Something went wrong!\nDon\'t worry its not you, its us.</string>
     <string name="no_internet">No Internet Connection</string>
+    <string name="search_cities_button">Search Cities Button</string>
+    <string name="app_settings_button">App Settings Button</string>
+    <string name="atmospheric_pressure_icon">Atmospheric Pressure Icon</string>
+    <string name="back_button">Back Button</string>
+    <string name="next_7_days">Next 7 Days</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="weather_icon">Weather Icon</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pressure">Pressure</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="humidity">Humidity</string>
+    <string name="today">Today</string>
+    <string name="sunset_icon">Sunset icon</string>
+    <string name="sunrise_icon">Sunrise icon</string>
 </resources>

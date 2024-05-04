@@ -16,6 +16,7 @@ import me.tangobee.weathernaut.databinding.ActivityMainBinding
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
 import me.tangobee.weathernaut.viewmodels.WeatherViewModelFactory
 import java.net.UnknownHostException
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +41,8 @@ class MainActivity : AppCompatActivity() {
         noInternetLiveData.observe(this) {noInternet ->
             if(noInternet) {
                 Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show()
+                Thread.sleep(1000)
+                exitProcess(0)
             }
         }
 
@@ -59,10 +62,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         weatherViewModel.weatherLiveData.observe(this) { weatherData ->
-            if(weatherData != null) {
-                binding.demo.text = weatherData.current_weather.current.temperature_2m.toString()
-            } else {
+            if(weatherData == null) {
                 Toast.makeText(this, getString(R.string.api_fetching_error), Toast.LENGTH_SHORT).show()
+                Thread.sleep(1000)
+                exitProcess(0)
             }
         }
     }
