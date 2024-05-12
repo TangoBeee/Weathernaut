@@ -74,4 +74,7 @@ dependencies {
     // Responsive Unit Lib for resizing elements
     implementation("com.intuit.ssp:ssp-android:1.1.1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
+
+    // Custom Switch Lib
+    implementation("io.github.bitvale:switcher:1.1.2")
 }

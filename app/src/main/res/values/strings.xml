@@ -31,4 +31,24 @@
     <string name="today">Today</string>
     <string name="sunset_icon">Sunset icon</string>
     <string name="sunrise_icon">Sunrise icon</string>
+    <string name="settings">Settings</string>
+    <string name="units">Units</string>
+    <string name="temperature_units">Temperature units</string>
+    <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
+    <string name="wind_speed_units">Wind speed units</string>
+    <string name="hpa">hPa</string>
+    <string name="atm">atm</string>
+    <string name="atmospheric_pressure_units">Atmospheric pressure units</string>
+    <string name="meters_per_second">m/s</string>
+    <string name="kilometers_per_hour">km/h</string>
+    <string name="miles_per_hour">mph</string>
+    <string name="weather_music_desc">Music according to the weather.</string>
+    <string name="about_weathernaut">About Weathernaut</string>
+    <string name="feedback">Feedback</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="credits">Credits</string>
+    <string name="other_settings">Other Settings</string>
+    <string name="weather_music">Weather music</string>
+    <string name="support_us">Support Us</string>
 </resources>
