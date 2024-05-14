@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="@dimen/_10sdp"
     android:paddingVertical="@dimen/_8sdp"
-    android:paddingHorizontal="@dimen/_12sdp"
+    android:paddingHorizontal="@dimen/_6sdp"
     android:background="@drawable/hourly_weather_box_background"
     android:gravity="center"
     android:orientation="vertical" >
@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/weatherIcon"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_30sdp"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_25sdp"
         android:src="@drawable/icon_weather_sun_cloud_rain"
         android:layout_marginVertical="@dimen/_5sdp"
         android:contentDescription="@string/weather_icon"/>
