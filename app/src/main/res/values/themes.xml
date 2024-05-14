@@ -9,6 +9,11 @@
 
     <style name="Theme.Weathernaut" parent="Base.Theme.Weathernaut" />
 
+    <style name="Theme.Weathernaut.OtherScreen" parent="Base.Theme.Weathernaut">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen" >
         <item name="windowSplashScreenBackground">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>

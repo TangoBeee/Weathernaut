@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:exported="false"
-            android:theme="@style/Theme.Weathernaut" />
+            android:theme="@style/Theme.Weathernaut.OtherScreen" />
 
         <meta-data
             android:name="preloaded_fonts"
