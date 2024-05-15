@@ -134,6 +134,7 @@ class HomeFragment : Fragment() {
     }
     private fun setHourlyRecyclerViewUIData(weatherData: WeatherData) {
         var currentHourlyWeatherItemPosition = 0
+        todayHourlyWeatherRVModelList.clear()
         for(i in 0 .. 23) {
             var time = convertDateStringToFormattedTime(weatherData.hourly_weather.hourly.time[i])
             if(isCurrentLocalTime(time)) {
@@ -147,6 +148,7 @@ class HomeFragment : Fragment() {
             todayHourlyWeatherRVModelList.add(HourlyWeatherRVModel(time, weatherIcon, "${weatherTemp.toInt()}°"))
         }
 
+        tomorrowHourlyWeatherRVModelList.clear()
         for(i in 24 .. 47) {
             val time = convertDateStringToFormattedTime(weatherData.hourly_weather.hourly.time[i])
             val weatherIcon = WeatherImageMapper.getImageForWeatherCode(weatherData.hourly_weather.hourly.weather_code[i])
