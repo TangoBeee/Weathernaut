@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.Next7DaysFragment"
     android:orientation="vertical"
-    android:padding="@dimen/_15sdp"
     android:scrollbarSize="0dp">
 
     <ImageButton

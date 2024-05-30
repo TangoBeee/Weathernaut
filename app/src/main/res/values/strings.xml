@@ -51,4 +51,9 @@
     <string name="other_settings">Other Settings</string>
     <string name="weather_music">Weather music</string>
     <string name="support_us">Support Us</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_your_city">Search Your City</string>
+    <string name="add_remove_button">Add remove button</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
 </resources>

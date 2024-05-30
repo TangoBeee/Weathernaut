@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.SettingsFragment"
     android:background="@color/white"
-    android:padding="@dimen/_15sdp"
     android:fitsSystemWindows="true">
 
     <ImageButton
@@ -57,8 +56,7 @@
                     android:fontFamily="@font/inter"
                     android:textColor="#9C9EAA"
                     android:textSize="@dimen/_10ssp"
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/_20sdp"/>
+                    android:textAllCaps="true"/>
 
                 <LinearLayout
                     android:id="@+id/temperatureUnit"
@@ -70,7 +68,6 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:weightSum="2"
                     android:gravity="center">
 
@@ -109,7 +106,6 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:weightSum="2"
                     android:gravity="center">
 
@@ -147,7 +143,6 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:weightSum="2"
                     android:gravity="center">
 
@@ -183,7 +178,6 @@
                 android:layout_height="@dimen/_1sdp"
                 android:background="#EAEAEA"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
                 app:layout_constraintTop_toBottomOf="@+id/unitLayout" />
 
             <LinearLayout
@@ -201,8 +195,7 @@
                     android:fontFamily="@font/inter"
                     android:textColor="#9C9EAA"
                     android:textSize="@dimen/_10ssp"
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/_20sdp" />
+                    android:textAllCaps="true" />
 
                 <LinearLayout
                     android:id="@+id/weatherMusicWrapper"
@@ -214,7 +207,6 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:weightSum="1">
 
                     <LinearLayout
@@ -260,7 +252,6 @@
                 android:layout_height="@dimen/_1sdp"
                 android:background="#EAEAEA"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
                 app:layout_constraintTop_toBottomOf="@+id/otherLayout" />
 
 
@@ -279,8 +270,7 @@
                     android:fontFamily="@font/inter"
                     android:textColor="#9C9EAA"
                     android:textSize="@dimen/_10ssp"
-                    android:textAllCaps="true"
-                    android:layout_marginStart="@dimen/_20sdp"/>
+                    android:textAllCaps="true"/>
 
                 <TextView
                     android:id="@+id/feedback"
@@ -295,8 +285,7 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp" />
+                    android:paddingVertical="@dimen/_15sdp" />
 
                 <TextView
                     android:id="@+id/privacyPolicy"
@@ -310,8 +299,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"/>
+                    android:paddingVertical="@dimen/_15sdp"/>
 
                 <TextView
                     android:id="@+id/donation"
@@ -325,8 +313,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
-                    android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"/>
+                    android:paddingVertical="@dimen/_15sdp"/>
 
                 <TextView
                     android:id="@+id/credits"
@@ -341,7 +328,6 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15sdp"
-                    android:paddingHorizontal="@dimen/_20sdp"
                     android:layout_marginBottom="30dp"/>
 
             </LinearLayout>

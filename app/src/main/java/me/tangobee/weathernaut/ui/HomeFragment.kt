@@ -55,13 +55,11 @@ class HomeFragment : Fragment() {
         }
 
         binding.settings.setOnClickListener {
-//            val intent = Intent(requireActivity(), SettingsActivity::class.java)
-//            startActivity(intent)
             Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_settingsFragment)
         }
 
         binding.searchCities.setOnClickListener {
-            // TODO("Create a screen for searching cities");
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_searchFragment)
         }
 
         binding.todayIndicator.setOnClickListener {
