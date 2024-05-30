@@ -1,6 +1,5 @@
 package me.tangobee.weathernaut.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
@@ -56,8 +55,9 @@ class HomeFragment : Fragment() {
         }
 
         binding.settings.setOnClickListener {
-            val intent = Intent(requireActivity(), SettingsActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(requireActivity(), SettingsActivity::class.java)
+//            startActivity(intent)
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment_to_settingsFragment)
         }
 
         binding.searchCities.setOnClickListener {

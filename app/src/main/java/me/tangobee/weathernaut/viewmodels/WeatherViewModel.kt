@@ -17,6 +17,10 @@ class WeatherViewModel(private val weatherRepository: WeatherRepository) : ViewM
         }
     }
 
+    fun updateWeatherData(weatherData: WeatherData) {
+        weatherRepository.updateWeatherData(weatherData)
+    }
+
     val weatherLiveData : LiveData<WeatherData?>
         get() = weatherRepository.weatherData
 

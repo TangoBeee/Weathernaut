@@ -13,11 +13,19 @@
         <action
             android:id="@+id/action_homeFragment_to_next7DaysFragment"
             app:destination="@id/next7DaysFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/next7DaysFragment"
         android:name="me.tangobee.weathernaut.ui.Next7DaysFragment"
         android:label="fragment_next_7_days"
         tools:layout="@layout/fragment_next_7_days" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="me.tangobee.weathernaut.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

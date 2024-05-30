@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SettingsActivity"
+    tools:context=".ui.SettingsFragment"
     android:background="@color/white"
     android:padding="@dimen/_15sdp"
     android:fitsSystemWindows="true">
@@ -342,7 +342,7 @@
                     android:foreground="?attr/selectableItemBackground"
                     android:paddingVertical="@dimen/_15sdp"
                     android:paddingHorizontal="@dimen/_20sdp"
-                    android:layout_marginBottom="100dp"/>
+                    android:layout_marginBottom="30dp"/>
 
             </LinearLayout>
 

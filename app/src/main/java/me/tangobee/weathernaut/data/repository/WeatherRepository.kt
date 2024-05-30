@@ -22,4 +22,8 @@ class WeatherRepository(private val weatherService: WeatherService) {
         }
     }
 
+    fun updateWeatherData(weatherData: WeatherData) {
+        weatherLiveData.postValue(weatherData)
+    }
+
 }

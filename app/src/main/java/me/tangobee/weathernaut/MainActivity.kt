@@ -13,6 +13,9 @@ import me.tangobee.weathernaut.data.RetrofitHelper
 import me.tangobee.weathernaut.data.api.WeatherService
 import me.tangobee.weathernaut.data.repository.WeatherRepository
 import me.tangobee.weathernaut.databinding.ActivityMainBinding
+import me.tangobee.weathernaut.models.WeatherData.WeatherData
+import me.tangobee.weathernaut.utils.SharedPreferencesHelper
+import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
 import me.tangobee.weathernaut.viewmodels.WeatherViewModelFactory
 import java.net.UnknownHostException
@@ -24,6 +27,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler
+
+    private var settingsUpdated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +71,24 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.api_fetching_error), Toast.LENGTH_SHORT).show()
                 Thread.sleep(1000)
                 exitProcess(0)
+            } else {
+                if(!settingsUpdated) {
+                    createLocalDB(weatherData)
+                }
+            }
+        }
+    }
+
+    private fun createLocalDB(weatherData: WeatherData) {
+        val sharedPreferencesHelper = SharedPreferencesHelper(this)
+        val currentSettings = sharedPreferencesHelper.getSettings()
+        if (currentSettings != null) {
+            val weatherHelper = WeatherHelper(currentSettings, weatherData)
+            val newWeatherData = weatherHelper.convertWeatherData()
+
+            if(newWeatherData != weatherData) {
+                settingsUpdated = true
+                weatherViewModel.updateWeatherData(newWeatherData)
             }
         }
     }
