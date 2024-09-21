@@ -23,6 +23,7 @@ import me.tangobee.weathernaut.models.GeocodingData.GeocodingModel
 import me.tangobee.weathernaut.models.GeocodingData.GeocodingResult
 import me.tangobee.weathernaut.models.NewLocationModel
 import me.tangobee.weathernaut.ui.adapter.LocationRVAdapter
+import me.tangobee.weathernaut.utils.GeocodingHelper
 import me.tangobee.weathernaut.viewmodels.GeocodingViewModel
 import me.tangobee.weathernaut.viewmodels.GeocodingViewModelFactory
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
@@ -120,7 +121,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun setLocationRecyclerViewUIData(locationData: GeocodingModel) {
-        locationRVModelList = locationData.results ?: ArrayList()
+        locationRVModelList = GeocodingHelper.sortLocationsByProximity(
+                lat,
+                long,
+                locationData.results ?: ArrayList()
+        ).toCollection(ArrayList())
 
         if (locationRVModelList.isEmpty()) {
             showPlaceholder(getString(R.string.no_locations_found))
