@@ -55,7 +55,8 @@ class SettingsFragment : Fragment() {
         }
 
         sharedPreferencesHelper = SharedPreferencesHelper(requireContext())
-        settingsModel = sharedPreferencesHelper.getSettings()!!
+        settingsModel = sharedPreferencesHelper.getSettings() ?: SettingsModel()
+        sharedPreferencesHelper.saveSettings(settingsModel)
         setSettingsUIDate()
 
         binding.feedback.setOnClickListener { openURL(Uri.parse("mailto:hello.weathernaut@outlook.com?subject=Feedback on Weathernaut app.")) }
