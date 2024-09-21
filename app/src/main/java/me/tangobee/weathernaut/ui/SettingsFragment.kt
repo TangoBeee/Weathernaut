@@ -18,6 +18,7 @@ import me.tangobee.weathernaut.constants.UnitsMapper
 import me.tangobee.weathernaut.databinding.FragmentSettingsBinding
 import me.tangobee.weathernaut.models.SettingsModel
 import me.tangobee.weathernaut.models.WeatherData.WeatherData
+import me.tangobee.weathernaut.services.WeatherMusicService
 import me.tangobee.weathernaut.utils.SharedPreferencesHelper
 import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
@@ -113,7 +114,15 @@ class SettingsFragment : Fragment() {
     }
 
     private fun weatherMusicToggle(musicFlag: Boolean) {
-        Toast.makeText(requireContext(), "Music is turned " + (if(musicFlag) "on" else "off"), Toast.LENGTH_SHORT).show()
+        if(musicFlag) {
+            Toast.makeText(requireContext(), "The music will start in a few seconds!", Toast.LENGTH_SHORT).show()
+            val startMusicIntent = Intent(requireContext(), WeatherMusicService::class.java)
+            requireActivity().startService(startMusicIntent)
+        }
+        else {
+            val stopMusicIntent = Intent(requireContext(), WeatherMusicService::class.java)
+            requireActivity().stopService(stopMusicIntent)
+        }
     }
 
     private fun openURL(uri: Uri) {

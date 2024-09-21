@@ -1,6 +1,8 @@
 package me.tangobee.weathernaut
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -14,6 +16,7 @@ import me.tangobee.weathernaut.data.api.WeatherService
 import me.tangobee.weathernaut.data.repository.WeatherRepository
 import me.tangobee.weathernaut.databinding.ActivityMainBinding
 import me.tangobee.weathernaut.models.WeatherData.WeatherData
+import me.tangobee.weathernaut.services.WeatherMusicService
 import me.tangobee.weathernaut.utils.SharedPreferencesHelper
 import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
@@ -49,6 +52,15 @@ class MainActivity : AppCompatActivity() {
                 Thread.sleep(1000)
                 exitProcess(0)
             }
+        }
+
+        val settingsModel = SharedPreferencesHelper(this).getSettings()
+        if(settingsModel?.isMusicOn != false) {
+            val startMusicIntent = Intent(this, WeatherMusicService::class.java)
+            startService(startMusicIntent)
+            Log.d("Music", "Music is on")
+        } else {
+            Log.d("Music", "Music is off")
         }
 
         fetchData()
