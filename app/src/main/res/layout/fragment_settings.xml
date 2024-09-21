@@ -306,7 +306,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:drawableEndCompat="@drawable/icon_right_arrow"
-                    android:text="@string/support_us"
+                    android:text="@string/donate_us"
                     android:fontFamily="@font/inter_medium"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_13ssp"

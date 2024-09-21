@@ -7,23 +7,25 @@
 
     <TextView
         android:id="@+id/cityName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/city"
         android:fontFamily="@font/inter"
         android:textSize="@dimen/_13ssp"
         android:textColor="@color/black"
+        android:layout_marginEnd="@dimen/_40sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/cityAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/country"
         android:fontFamily="@font/inter"
         android:textSize="@dimen/_9ssp"
         android:textColor="#7A7A7B"
+        android:layout_marginEnd="@dimen/_40sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cityName" />
 

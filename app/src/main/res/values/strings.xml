@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Weathernaut</string>
 
-    <string name="api_fetching_error">Something went wrong!\nDon\'t worry its not you, its us.</string>
+    <string name="api_fetching_error">Something went wrong!\nDon\'t worry its not you, its us. Try later.</string>
     <string name="no_internet">No Internet Connection</string>
     <string name="search_cities_button">Search Cities Button</string>
     <string name="app_settings_button">App Settings Button</string>
@@ -50,10 +50,13 @@
     <string name="credits">Credits</string>
     <string name="other_settings">Other Settings</string>
     <string name="weather_music">Weather music</string>
-    <string name="support_us">Support Us</string>
+    <string name="donate_us">Donate Us</string>
     <string name="cancel">Cancel</string>
     <string name="search_your_city">Search Your City</string>
     <string name="add_remove_button">Add remove button</string>
     <string name="country">Country</string>
     <string name="city">City</string>
+    <string name="no_locations_found">No locations found</string>
+    <string name="loading">Loading…</string>
+    <string name="something_went_wrong">Something went wrong!</string>
 </resources>

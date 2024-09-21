@@ -9,6 +9,7 @@ class SharedPreferencesHelper(context: Context) {
     companion object {
         private const val PREFS_NAME = "WeathernautPrefs"
         private const val SETTINGS_KEY = "SettingsKey"
+        private const val GEOCODING_KEY = "GeocodingKey"
     }
 
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -34,6 +35,14 @@ class SharedPreferencesHelper(context: Context) {
             val updatedSettings = updateFunction.invoke(currentSettings)
             saveSettings(updatedSettings)
         }
+    }
+
+    fun saveGeocodingID(id: Int) {
+        sharedPreferences.edit().putInt(GEOCODING_KEY, id).apply()
+    }
+
+    fun getGeocodingID(): Int {
+        return sharedPreferences.getInt(GEOCODING_KEY, -1)
     }
 }
 
