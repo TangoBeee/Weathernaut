@@ -1,5 +1,6 @@
 package me.tangobee.weathernaut.ui.adapter
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,6 +35,11 @@ class LocationRVAdapter(private val locationRVModalList: ArrayList<GeocodingResu
 
         holder.addRemoveCity.setOnClickListener {
             holder.addRemoveCity.setImageResource(R.drawable.icon_right_arrow)
+            val context = holder.itemView.context
+
+            if (context is Activity) {
+                context.onBackPressed()
+            }
         }
 
         val samePlace = GeocodingHelper.areLocationsSame(lat, long, locationRVModalList[position].latitude, locationRVModalList[position].longitude)
