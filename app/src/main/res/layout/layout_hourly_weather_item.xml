@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hourlyWeatherContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:paddingVertical="@dimen/_8sdp"
+    android:paddingHorizontal="@dimen/_6sdp"
+    android:background="@drawable/hourly_weather_box_background"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/weatherTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:00 am"
+        android:textAlignment="center"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/upcomingTimeColor"/>
+
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:src="@drawable/icon_weather_sun_cloud_rain"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:contentDescription="@string/weather_icon"/>
+
+    <TextView
+        android:id="@+id/weatherValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:text="21°"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/textColor" />
+
+</LinearLayout>

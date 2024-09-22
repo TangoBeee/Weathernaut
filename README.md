@@ -9,26 +9,26 @@
 **Requirements**
 - Android Studio latest version
 - JDK 8
-- Android SDK 33
+- Target Android SDK 35
 - Supports API Level +24
 - Material Components 1.10.0
 
 **Highlights**
-- Use [OpenWeatherMap] & [Open-Meteo] API
+- Use [Open-Meteo] API
 - Use Material Design 2
 - Responsive UI
 - Background Lofi Music
-- Use locale Database
+- Uses locale Database
 
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
-      alt="Download from IzzyOnDroid"
-      height="80">](https://apt.izzysoft.de/fdroid/index/apk/me.tangobee.weathernaut/)
+alt="Download from IzzyOnDroid"
+height="80">](https://apt.izzysoft.de/fdroid/index/apk/me.tangobee.weathernaut/)
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
-      alt="Download from Google Play"
-      height="80">](https://play.google.com/store/apps/details?id=me.tangobee.weathernaut)
+alt="Download from Google Play"
+height="80">](https://play.google.com/store/apps/details?id=me.tangobee.weathernaut)
 [<img src="assets/direct-apk-download.png"
-      alt="Direct apk download"
-      height="80">](https://github.com/tangobeee/Weathernaut/releases/latest)
+alt="Direct apk download"
+height="80">](https://github.com/tangobeee/Weathernaut/releases/latest)
 
 **Screenshot**
 
@@ -44,7 +44,6 @@
 - Square [Retrofit] / [GSON]
 - Custom Views: [Dots Indicator] / [Switcher]
 - Intuit: [SSP] / [SDP]
-- Facebook: [Shimmer]
 
 **Credits**
 
@@ -77,8 +76,7 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-    
-[OpenWeatherMap]: https://openweathermap.org/
+
 [Open-Meteo]: https://open-meteo.com/
 [credit-link]: https://tangobee.netlify.app/weathernaut/credits
 [Support libraries]: https://developer.android.com/jetpack/androidx/
@@ -89,6 +87,5 @@
 [SDP]: https://github.com/intuit/sdp
 [SSP]: https://github.com/intuit/ssp
 [Switcher]: https://github.com/bitvale/Switcher
-[Shimmer]: https://github.com/facebookarchive/shimmer-android
-[background-music]: https://github.com/tangobeee/Weathernaut-Music-Server
+[background-music]: https://github.com/tangobeee/Weathernaut-Backend
 [Release]: https://github.com/tangobeee/Weathernaut/releases

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.base.MainActivity"
+    tools:context=".MainActivity"
+    android:background="@drawable/home_background"
+    android:scrollbarSize="0dp"
     android:fitsSystemWindows="true"
-    android:background="@drawable/home_gradient_background">
+    android:id="@+id/mainContainerView">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/dashFragmentContainerView"
+        android:id="@+id/mainFragmentContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/app_nav_graph"/>
+        app:navGraph="@navigation/app_nav_graph"
+        android:padding="@dimen/_15sdp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

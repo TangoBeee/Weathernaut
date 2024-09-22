@@ -2,22 +2,39 @@ package me.tangobee.weathernaut.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import me.tangobee.weathernaut.data.remote.WeatherService
-import me.tangobee.weathernaut.model.weathermodel.WeatherData
+import me.tangobee.weathernaut.data.api.WeatherService
+import me.tangobee.weathernaut.models.GeoWeatherModel
+import me.tangobee.weathernaut.models.WeatherData.WeatherData
 
 class WeatherRepository(private val weatherService: WeatherService) {
 
-    private val weatherLiveData = MutableLiveData<WeatherData>()
+    private val weatherLiveData = MutableLiveData<WeatherData?>()
 
-    val weatherData: LiveData<WeatherData>
+    val weatherData: LiveData<WeatherData?>
         get() = weatherLiveData
 
-    suspend fun getWeather(lat: String, lon: String, appId: String) {
-        val result = weatherService.getWeather(lat, lon, appId)
+    suspend fun getWeather() {
+        val weatherResult = weatherService.getWeather()
 
-        if(result.body() != null) {
-            weatherLiveData.postValue(result.body())
+        if(weatherResult.isSuccessful && weatherResult.body() != null) {
+            weatherLiveData.postValue(weatherResult.body())
+        } else {
+            weatherLiveData.postValue(null)
         }
+    }
+
+    suspend fun getGeoWeather(geoWeatherModel: GeoWeatherModel) {
+        val weatherResult = weatherService.getGeoWeather(geoWeatherModel)
+
+        if(weatherResult.isSuccessful && weatherResult.body() != null) {
+            weatherLiveData.postValue(weatherResult.body())
+        } else {
+            weatherLiveData.postValue(null)
+        }
+    }
+
+    fun updateWeatherData(weatherData: WeatherData) {
+        weatherLiveData.postValue(weatherData)
     }
 
 }

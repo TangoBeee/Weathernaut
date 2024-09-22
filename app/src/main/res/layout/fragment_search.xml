@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SearchFragment"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchCity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:iconifiedByDefault="false"
+        android:background="@drawable/search_location_input_style"
+        android:theme="@style/AppSearchView"
+        app:queryBackground="@null"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cancelSearch">
+        <requestFocus />
+    </androidx.appcompat.widget.SearchView>
+
+    <TextView
+        android:id="@+id/cancelSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:fontFamily="@font/inter_medium"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="@id/searchCity"/>
+
+    <TextView
+        android:id="@+id/searchPlaceholderTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/search_your_city"
+        android:fontFamily="@font/inter"
+        android:textColor="@color/placeholderColor"
+        android:layout_marginTop="@dimen/_200sdp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/citiesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toBottomOf="@id/searchCity"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/cities_item_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

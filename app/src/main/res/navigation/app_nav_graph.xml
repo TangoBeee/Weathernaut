@@ -7,29 +7,33 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="me.tangobee.weathernaut.ui.fragments.HomeFragment"
+        android:name="me.tangobee.weathernaut.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-
         <action
-            android:id="@+id/nav_homeFrag_to_upcomingDaysFrag"
-            app:destination="@id/upcomingDaysFragment" />
-
+            android:id="@+id/action_homeFragment_to_next7DaysFragment"
+            app:destination="@id/next7DaysFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/upcomingDaysFragment"
-        android:name="me.tangobee.weathernaut.ui.fragments.UpcomingDaysFragment"
-        android:label="fragment_upcoming_days"
-        tools:layout="@layout/fragment_upcoming_days">
-
-        <argument android:name="lat"
-            app:argType="string"/>
-
-        <argument android:name="lon"
-            app:argType="string"/>
-
-    </fragment>
-
+        android:id="@+id/next7DaysFragment"
+        android:name="me.tangobee.weathernaut.ui.Next7DaysFragment"
+        android:label="fragment_next_7_days"
+        tools:layout="@layout/fragment_next_7_days" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="me.tangobee.weathernaut.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="me.tangobee.weathernaut.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 
 </navigation>

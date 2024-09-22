@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.Next7DaysFragment"
+    android:orientation="vertical"
+    android:scrollbarSize="0dp">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_back"
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/back_button"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_7_days"
+        android:textSize="@dimen/_16ssp"
+        android:textColor="@color/textColor"
+        android:fontFamily="@font/inter_medium"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/backButton" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tomorrowWeatherContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/backButton"
+        android:background="@drawable/tomorrow_weather_box_background"
+        android:padding="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_30sdp">
+
+        <TextView
+            android:id="@+id/tomorrowLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tomorrow"
+            android:textSize="@dimen/_12ssp"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/inter_semibold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tomorrowWeatherIcon"
+            app:layout_constraintBottom_toBottomOf="@id/tomorrowWeatherIcon" />
+
+        <TextView
+            android:id="@+id/tomorrowWeatherTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:text="22°"
+            android:textColor="@color/textColor"
+            android:fontFamily="@font/inter_bold"
+            app:layout_constraintEnd_toStartOf="@id/tomorrowWeatherIcon"
+            app:layout_constraintTop_toTopOf="@id/tomorrowWeatherIcon"
+            app:layout_constraintBottom_toBottomOf="@id/tomorrowWeatherIcon" />
+
+        <ImageView
+            android:id="@+id/tomorrowWeatherIcon"
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:src="@drawable/icon_weather_sun"
+            android:contentDescription="@string/weather_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/sunriseIcon"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:src="@drawable/icon_sunrise"
+            app:layout_constraintTop_toBottomOf="@id/tomorrowWeatherIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/sunsetIcon"
+            android:contentDescription="@string/sunrise_icon" />
+
+        <TextView
+            android:id="@+id/sunriseTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="00:00 am"
+            android:fontFamily="@font/inter_bold"
+            app:layout_constraintStart_toStartOf="@id/sunriseIcon"
+            app:layout_constraintEnd_toEndOf="@id/sunriseIcon"
+            app:layout_constraintTop_toBottomOf="@id/sunriseIcon"/>
+
+        <ImageView
+            android:id="@+id/sunsetIcon"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:src="@drawable/icon_sunset"
+            android:layout_below="@+id/tomorrowWeatherIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/sunriseIcon"
+            app:layout_constraintStart_toEndOf="@id/sunriseIcon"
+            android:contentDescription="@string/sunset_icon" />
+
+        <TextView
+            android:id="@+id/sunsetTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:text="24:00 pm"
+            android:fontFamily="@font/inter_bold"
+            app:layout_constraintStart_toStartOf="@id/sunsetIcon"
+            app:layout_constraintEnd_toEndOf="@id/sunsetIcon"
+            app:layout_constraintTop_toBottomOf="@id/sunsetIcon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/next7DaysWeatherRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        tools:listitem="@layout/layout_next_weather_item"
+        tools:itemCount="6"
+        android:layout_below="@id/tomorrowWeatherContainer" />
+
+</RelativeLayout>
