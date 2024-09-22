@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var coroutineExceptionHandler: CoroutineExceptionHandler
+    private lateinit var sharedPreferencesHelper: SharedPreferencesHelper
 
     private var settingsUpdated = false
 
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
+
+        sharedPreferencesHelper = SharedPreferencesHelper(this)
 
         val noInternetLiveData : MutableLiveData<Boolean> =  MutableLiveData(false)
 
@@ -58,9 +61,6 @@ class MainActivity : AppCompatActivity() {
         if(settingsModel?.isMusicOn != false) {
             val startMusicIntent = Intent(this, WeatherMusicService::class.java)
             startService(startMusicIntent)
-            Log.d("Music", "Music is on")
-        } else {
-            Log.d("Music", "Music is off")
         }
 
         fetchData()
@@ -74,8 +74,14 @@ class MainActivity : AppCompatActivity() {
         val weatherRepository = WeatherRepository(weatherService)
         weatherViewModel = ViewModelProvider(this, WeatherViewModelFactory(weatherRepository))[WeatherViewModel::class.java]
 
+        val geocodingData = sharedPreferencesHelper.getGeocodingData()
+
         if(weatherViewModel.weatherLiveData.value == null) {
-            weatherViewModel.getWeather(coroutineExceptionHandler)
+            if(geocodingData == null) {
+                weatherViewModel.getWeather(coroutineExceptionHandler)
+            } else {
+                weatherViewModel.getGeoWeather(coroutineExceptionHandler, geocodingData)
+            }
         }
 
         weatherViewModel.weatherLiveData.observe(this) { weatherData ->
@@ -92,7 +98,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createLocalDB(weatherData: WeatherData) {
-        val sharedPreferencesHelper = SharedPreferencesHelper(this)
         val currentSettings = sharedPreferencesHelper.getSettings()
         if (currentSettings != null) {
             val weatherHelper = WeatherHelper(currentSettings, weatherData)

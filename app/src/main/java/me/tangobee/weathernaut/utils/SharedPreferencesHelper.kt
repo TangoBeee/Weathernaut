@@ -3,6 +3,7 @@ package me.tangobee.weathernaut.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import me.tangobee.weathernaut.models.GeoWeatherModel
 import me.tangobee.weathernaut.models.SettingsModel
 
 class SharedPreferencesHelper(context: Context) {
@@ -37,12 +38,18 @@ class SharedPreferencesHelper(context: Context) {
         }
     }
 
-    fun saveGeocodingID(id: Int) {
-        sharedPreferences.edit().putInt(GEOCODING_KEY, id).apply()
+    fun saveGeocodingData(geoWeatherModel: GeoWeatherModel) {
+        val geocodingJson = gson.toJson(geoWeatherModel)
+        sharedPreferences.edit().putString(GEOCODING_KEY, geocodingJson).apply()
     }
 
-    fun getGeocodingID(): Int {
-        return sharedPreferences.getInt(GEOCODING_KEY, -1)
+    fun getGeocodingData(): GeoWeatherModel? {
+        val geocodingJson = sharedPreferences.getString(GEOCODING_KEY, null)
+        return if (geocodingJson != null) {
+            gson.fromJson(geocodingJson, GeoWeatherModel::class.java)
+        } else {
+            null
+        }
     }
 }
 

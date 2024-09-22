@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -136,7 +137,7 @@ class SearchFragment : Fragment() {
             val locationRVLinearLayoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             binding.citiesRecyclerView.setHasFixedSize(true)
             binding.citiesRecyclerView.layoutManager = locationRVLinearLayoutManager
-            val locationAdapter = LocationRVAdapter(locationRVModelList, lat, long)
+            val locationAdapter = LocationRVAdapter(locationRVModelList, lat, long, coroutineExceptionHandler, weatherViewModel)
             binding.citiesRecyclerView.adapter = locationAdapter
         }
     }

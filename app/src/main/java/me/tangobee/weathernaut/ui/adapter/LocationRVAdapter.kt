@@ -7,11 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.CoroutineExceptionHandler
 import me.tangobee.weathernaut.R
+import me.tangobee.weathernaut.models.GeoWeatherModel
 import me.tangobee.weathernaut.models.GeocodingData.GeocodingResult
 import me.tangobee.weathernaut.utils.GeocodingHelper
+import me.tangobee.weathernaut.utils.SharedPreferencesHelper
+import me.tangobee.weathernaut.viewmodels.WeatherViewModel
 
-class LocationRVAdapter(private val locationRVModalList: ArrayList<GeocodingResult>, private val lat: Double, private val long: Double) : RecyclerView.Adapter<LocationRVAdapter.ViewHolder>() {
+class LocationRVAdapter(private val locationRVModalList: ArrayList<GeocodingResult>, private val lat: Double, private val long: Double, private val coroutineExceptionHandler: CoroutineExceptionHandler, private val weatherViewModel: WeatherViewModel) : RecyclerView.Adapter<LocationRVAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.cities_item_layout, parent, false))
@@ -36,6 +40,21 @@ class LocationRVAdapter(private val locationRVModalList: ArrayList<GeocodingResu
         holder.addRemoveCity.setOnClickListener {
             holder.addRemoveCity.setImageResource(R.drawable.icon_right_arrow)
             val context = holder.itemView.context
+
+            val geoWeatherModel = GeoWeatherModel(
+                listOf(
+                    locationRVModalList[position].latitude,
+                    locationRVModalList[position].longitude
+                ),
+                locationRVModalList[position].name,
+                locationRVModalList[position].country,
+                locationRVModalList[position].timezone
+            )
+
+            weatherViewModel.getGeoWeather(coroutineExceptionHandler, geoWeatherModel)
+
+            val sharedPreferencesHelper = SharedPreferencesHelper(context)
+            sharedPreferencesHelper.saveGeocodingData(geoWeatherModel)
 
             if (context is Activity) {
                 context.onBackPressed()
