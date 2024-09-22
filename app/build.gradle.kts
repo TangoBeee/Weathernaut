@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "me.tangobee.weathernaut"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "me.tangobee.weathernaut"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 10
         versionName = "2.0"
 
