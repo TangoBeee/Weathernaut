@@ -1,9 +1,10 @@
 package me.tangobee.weathernaut.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.constants.UnitsMapper
@@ -22,6 +24,7 @@ import me.tangobee.weathernaut.services.WeatherMusicService
 import me.tangobee.weathernaut.utils.SharedPreferencesHelper
 import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
+import java.util.Locale
 
 class SettingsFragment : Fragment() {
 
@@ -44,6 +47,7 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainContainerView = requireActivity().findViewById(R.id.mainContainerView)
@@ -68,6 +72,28 @@ class SettingsFragment : Fragment() {
         binding.temperatureUnit.setOnClickListener {showTemperatureUnitPopup(binding.temperatureSpinner)}
         binding.windSpeedUnit.setOnClickListener {showWindSpeedUnitPopup(binding.windSpeedSpinner)}
         binding.atmosphericPressureUnit.setOnClickListener {showAtmosphericPressureUnitPopup(binding.atmosphericPressureSpinner)}
+        binding.language.setOnClickListener {showLanguagePopup(binding.languageSpinner)}
+        binding.language.apply {
+            val lang = context.resources.configuration.locale.language
+            when(lang){
+                "en" -> {
+                    binding.languageSpinner.text = "English"
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_uk)
+                }
+                "es" -> {
+                    binding.languageSpinner.text = "Español"
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_es)
+                }
+                "fr" -> {
+                    binding.languageSpinner.text = "Français"
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_fr)
+                }
+                "de" -> {
+                    binding.languageSpinner.text = "Deutsch"
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_de)
+                }
+            }
+        }
 
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -247,6 +273,40 @@ class SettingsFragment : Fragment() {
 
         popup.show()
     }
+    private fun showLanguagePopup(view: View) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.inflate(R.menu.language_menu)
+        popup.setOnMenuItemClickListener { item: MenuItem? ->
+            when (item!!.itemId) {
+                R.id.english -> {
+                    setLocale(requireContext(),"en")
+                    binding.languageSpinner.text = item.title
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_uk)
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+                R.id.spanish -> {
+                    setLocale(requireContext(),"es")
+                    binding.languageSpinner.text = item.title
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_es)
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+                R.id.french -> {
+                    setLocale(requireContext(),"fr")
+                    binding.languageSpinner.text = item.title
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_fr)
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+                R.id.german -> {
+                    setLocale(requireContext(),"de")
+                    binding.languageSpinner.text = item.title
+                    binding.flagIcon.setImageResource(R.drawable.country_flag_de)
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+            true
+        }
+        popup.show()
+    }
 
     private fun updateWeatherData(currentSettings: SettingsModel?) {
         if(currentSettings != null) {
@@ -261,4 +321,15 @@ class SettingsFragment : Fragment() {
         super.onDestroy()
         mainContainerView.background = ContextCompat.getDrawable(requireContext(), R.drawable.home_background)
     }
+
+    private fun setLocale(context: Context, languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+        config.setLocale(locale)
+//        context.createConfigurationContext(config)
+        context.resources.updateConfiguration(config, resources.displayMetrics)
+    }
 }
+
