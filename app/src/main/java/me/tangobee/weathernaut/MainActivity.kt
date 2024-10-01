@@ -9,6 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.cancel
 import me.tangobee.weathernaut.data.RetrofitHelper
@@ -49,13 +50,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        noInternetLiveData.observe(this) {noInternet ->
-            if(noInternet) {
-                Toast.makeText(this, getString(R.string.no_internet), Toast.LENGTH_LONG).show()
-                Thread.sleep(1000)
-                exitProcess(0)
+        noInternetLiveData.observe(this) { noInternet ->
+            if (noInternet) {
+                Snackbar.make(binding.root, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
+                    .setAction(getString(R.string.retry)) {
+                        fetchData() // Retry fetching data
+                    }.show()
             }
         }
+
 
         val settingsModel = SharedPreferencesHelper(this).getSettings()
         if(settingsModel?.isMusicOn != false) {
@@ -112,6 +115,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        weatherViewModel.weatherLiveData.removeObservers(this)
         weatherViewModel.viewModelScope.cancel("ActivityDestroying")
     }
 }
