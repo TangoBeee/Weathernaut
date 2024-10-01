@@ -2,7 +2,6 @@ package me.tangobee.weathernaut
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -59,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         val settingsModel = SharedPreferencesHelper(this).getSettings()
         if(settingsModel?.isMusicOn != false) {
-            val startMusicIntent = Intent(this, WeatherMusicService::class.java)
+            var startMusicIntent = Intent(this, WeatherMusicService::class.java)
             startService(startMusicIntent)
         }
 
