@@ -63,14 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        noInternetLiveData.observe(this) { noInternet ->
-            if (noInternet) {
-                Snackbar.make(binding.root, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction(getString(R.string.retry)) {
-                        fetchData() // Retry fetching data
-                    }.show()
-            }
-        }
+
 
         // Request notification permission for Android 13+ (API 33+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
