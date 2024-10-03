@@ -115,6 +115,7 @@ class SettingsFragment : Fragment() {
         binding.atmosphericPressureSpinner.text = UnitsMapper.getShorthandUnit(settingsModel.pressureUnit)
 
         binding.weatherMusicSwitch.setChecked(settingsModel.isMusicOn)
+        binding.languageSpinner.text=settingsModel.LanguageName
     }
 
     private fun weatherMusicToggle(musicFlag: Boolean) {
@@ -264,6 +265,14 @@ class SettingsFragment : Fragment() {
                     val config = Configuration()
                     config.locale = Locale("")
                     resources.updateConfiguration(config, resources.displayMetrics)
+                    sharedPreferencesHelper.updateSettings {
+                        it.Language = ""
+                        it.LanguageName= item.title.toString()
+                        it
+                    }
+
+                    val currentSettings = sharedPreferencesHelper.getSettings()
+                    updateWeatherData(currentSettings)
                 }
                 R.id.hindi -> {
                     binding.languageSpinner.text = item.title
@@ -271,6 +280,15 @@ class SettingsFragment : Fragment() {
                     val config = Configuration()
                     config.locale = Locale("hi")
                     resources.updateConfiguration(config, resources.displayMetrics)
+
+                    sharedPreferencesHelper.updateSettings {
+                        it.Language = "hi"
+                        it.LanguageName=item.title.toString()
+                        it
+                    }
+
+                    val currentSettings = sharedPreferencesHelper.getSettings()
+                    updateWeatherData(currentSettings)
                 }
 
             }

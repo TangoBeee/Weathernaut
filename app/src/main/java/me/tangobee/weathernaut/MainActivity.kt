@@ -1,6 +1,7 @@
 package me.tangobee.weathernaut
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
 import me.tangobee.weathernaut.viewmodels.WeatherViewModelFactory
 import java.net.UnknownHostException
+import java.util.Locale
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         fetchData()
+        setLanguage()
         splashScreen.setKeepOnScreenCondition { (weatherViewModel.weatherLiveData.value == null) }
 
         setContentView(binding.root)
@@ -95,7 +98,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
+    private fun setLanguage(){
+        Locale.setDefault(Locale(sharedPreferencesHelper.getSettings()?.Language ?:""))
+        val config = Configuration()
+        config.locale = Locale(sharedPreferencesHelper.getSettings()?.Language ?:"")
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
     private fun createLocalDB(weatherData: WeatherData) {
         val currentSettings = sharedPreferencesHelper.getSettings()
         if (currentSettings != null) {
