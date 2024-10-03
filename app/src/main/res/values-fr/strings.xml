@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weathernaut</string>
+
+    <string name="api_fetching_error">Quelque chose a mal tourné !\nNe vous inquiétez pas, ce n\'est pas de votre faute, c\'est nous. Essayez plus tard.</string>
+    <string name="no_internet">Pas de connexion Internet</string>
+    <string name="search_cities_button">Bouton de recherche de villes</string>
+    <string name="app_settings_button">Bouton des paramètres de l\'application</string>
+    <string name="atmospheric_pressure_icon">Icône de pression atmosphérique</string>
+    <string name="back_button">Bouton de retour</string>
+    <string name="next_7_days">Prochaines 7 jours</string>
+    <string name="tomorrow">Demain</string>
+    <string name="weather_icon">Icône météo</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Synchroniser</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Votre signature</string>
+    <string name="reply_title">Action de réponse par défaut</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Synchroniser les e-mails périodiquement</string>
+    <string name="attachment_title">Télécharger les pièces jointes entrantes</string>
+    <string name="attachment_summary_on">Télécharger automatiquement les pièces jointes pour les e-mails entrants</string>
+    <string name="attachment_summary_off">Télécharger uniquement les pièces jointes sur demande</string>
+    <string name="hello_blank_fragment">Bonjour fragment vide</string>
+    <string name="pressure">Pression</string>
+    <string name="wind_speed">Vitesse du vent</string>
+    <string name="humidity">Humidité</string>
+    <string name="today">Aujourd\'hui</string>
+    <string name="sunset_icon">Icône de coucher de soleil</string>
+    <string name="sunrise_icon">Icône de lever de soleil</string>
+    <string name="settings">Paramètres</string>
+    <string name="units">Unités</string>
+    <string name="language">Langue</string>
+    <string name="temperature_units">Unités de température</string>
+    <string name="celsius">°C</string>
+    <string name="fahrenheit">°F</string>
+    <string name="wind_speed_units">Unités de vitesse du vent</string>
+    <string name="hpa">hPa</string>
+    <string name="atm">atm</string>
+    <string name="atmospheric_pressure_units">Unités de pression atmosphérique</string>
+    <string name="meters_per_second">m/s</string>
+    <string name="kilometers_per_hour">km/h</string>
+    <string name="miles_per_hour">mph</string>
+    <string name="weather_music_desc">Musique selon la météo.</string>
+    <string name="about_weathernaut">À propos de Weathernaut</string>
+    <string name="feedback">Retour d\'information</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="credits">Crédits</string>
+    <string name="other_settings">Autres paramètres</string>
+    <string name="weather_music">Musique météo</string>
+    <string name="donate_us">Faites-nous un don</string>
+    <string name="cancel">Annuler</string>
+    <string name="search_your_city">Recherchez votre ville</string>
+    <string name="add_remove_button">bouton ajouter/supprimer</string>
+    <string name="country">Pays</string>
+    <string name="city">Ville</string>
+    <string name="no_locations_found">Aucun emplacement trouvé</string>
+    <string name="loading">Chargement…</string>
+    <string name="something_went_wrong">Quelque chose a mal tourné !</string>
+    <string name="spanish">Espagnol</string>
+    <string name="english">Anglais</string>
+    <string name="french">Français</string>
+    <string name="german">Allemand</string>
+    <string name="country_flag">drapeau_du_pays</string>
+</resources>

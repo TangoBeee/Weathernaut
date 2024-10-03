@@ -99,6 +99,18 @@ class Next7DaysFragment : Fragment() {
         }
 
         val days = arrayOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+        val days_es = arrayOf("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado")
+        val days_fr = arrayOf("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi")
+        val days_de = arrayOf("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag")
+
+        val lang = requireContext().resources.configuration.locale.language
+        when(lang){
+            "en" -> return days[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+            "es" -> return days_es[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+            "fr" -> return days_fr[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+            "de" -> return days_de[calendar.get(Calendar.DAY_OF_WEEK) - 1]
+        }
+
         return days[calendar.get(Calendar.DAY_OF_WEEK) - 1]
     }
 

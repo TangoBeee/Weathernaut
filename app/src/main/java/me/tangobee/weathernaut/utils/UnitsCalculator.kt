@@ -1,5 +1,7 @@
 package me.tangobee.weathernaut.utils
 
+import java.util.Locale
+
 class UnitConverter {
 
     fun convertTemperature(value: Double, fromUnit: String, toUnit: String): Double {
@@ -37,6 +39,6 @@ class UnitConverter {
     }
 
     private fun Double.formatToTwoDecimalPlaces(): Double {
-        return String.format("%.2f", this).toDouble()
+        return String.format(Locale.US, "%.2f", this).toDouble()
     }
 }

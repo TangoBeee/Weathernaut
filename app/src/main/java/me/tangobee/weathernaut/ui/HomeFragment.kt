@@ -1,8 +1,10 @@
 package me.tangobee.weathernaut.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -119,7 +121,15 @@ class HomeFragment : Fragment() {
         binding.currentWeatherTemperature.text = weatherData.current_weather.current.temperature_2m.toInt().toString()
         binding.weatherUnit.text = weatherData.current_weather.current_units.temperature_2m
         binding.weatherIcon.setImageResource(WeatherImageMapper.getImageForWeatherCode(weatherData.current_weather.current.weather_code))
-        binding.currentWeatherType.text = WeatherCodes.weatherConstants.first {it.code == weatherData.current_weather.current.weather_code}.description
+
+        val lang = requireContext().resources.configuration.locale.language
+        when(lang){
+            "en" -> binding.currentWeatherType.text = WeatherCodes.weatherConstants.first {it.code == weatherData.current_weather.current.weather_code}.description
+            "es" -> binding.currentWeatherType.text = WeatherCodes.weatherConstants_es.first {it.code == weatherData.current_weather.current.weather_code}.description
+            "fr" -> binding.currentWeatherType.text = WeatherCodes.weatherConstants_fr.first {it.code == weatherData.current_weather.current.weather_code}.description
+            "de" -> binding.currentWeatherType.text = WeatherCodes.weatherConstants_de.first {it.code == weatherData.current_weather.current.weather_code}.description
+        }
+//        binding.currentWeatherType.text = WeatherCodes.weatherConstants.first {it.code == weatherData.current_weather.current.weather_code}.description
 
         val currentPressure = weatherData.current_weather.current.pressure_msl.toString() + weatherData.current_weather.current_units.pressure_msl
         binding.pressureValue.text = currentPressure

@@ -17,12 +17,14 @@ import me.tangobee.weathernaut.data.repository.WeatherRepository
 import me.tangobee.weathernaut.databinding.ActivityMainBinding
 import me.tangobee.weathernaut.models.WeatherData.WeatherData
 import me.tangobee.weathernaut.services.WeatherMusicService
+import me.tangobee.weathernaut.utils.LanguageHelper.setLocale
 import me.tangobee.weathernaut.utils.SharedPreferencesHelper
 import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
 import me.tangobee.weathernaut.viewmodels.WeatherViewModelFactory
 import java.net.UnknownHostException
 import kotlin.system.exitProcess
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,7 +42,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         sharedPreferencesHelper = SharedPreferencesHelper(this)
-
+        setLanguage()
+        
         val noInternetLiveData : MutableLiveData<Boolean> =  MutableLiveData(false)
 
         coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
@@ -67,6 +70,12 @@ class MainActivity : AppCompatActivity() {
         splashScreen.setKeepOnScreenCondition { (weatherViewModel.weatherLiveData.value == null) }
 
         setContentView(binding.root)
+    }
+
+    private fun setLanguage() {
+        val language = sharedPreferencesHelper.getLanguagePreference()
+        setLocale(this@MainActivity, language, resources)
+        Log.d("Weathernaut", "Language set to: $language")
     }
 
     private fun fetchData() {

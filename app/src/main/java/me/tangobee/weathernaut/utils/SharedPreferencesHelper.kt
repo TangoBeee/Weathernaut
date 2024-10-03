@@ -11,6 +11,7 @@ class SharedPreferencesHelper(context: Context) {
         private const val PREFS_NAME = "WeathernautPrefs"
         private const val SETTINGS_KEY = "SettingsKey"
         private const val GEOCODING_KEY = "GeocodingKey"
+        private const val LANGUAGE_PREF = "LanguagePreference"
     }
 
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -49,6 +50,20 @@ class SharedPreferencesHelper(context: Context) {
             gson.fromJson(geocodingJson, GeoWeatherModel::class.java)
         } else {
             null
+        }
+    }
+
+    fun saveLanguagePreference(language: String) {
+        val languageJson = gson.toJson(language)
+        sharedPreferences.edit().putString(LANGUAGE_PREF, languageJson).apply()
+    }
+
+    fun getLanguagePreference(): String {
+        val languageJson = sharedPreferences.getString(LANGUAGE_PREF, null)
+        return if(languageJson != null){
+            gson.fromJson(languageJson, String::class.java)
+        } else{
+            "en"
         }
     }
 }
