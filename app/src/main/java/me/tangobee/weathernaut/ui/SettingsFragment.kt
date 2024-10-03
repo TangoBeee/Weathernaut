@@ -1,9 +1,9 @@
 package me.tangobee.weathernaut.ui
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +12,7 @@ import android.widget.ScrollView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import me.tangobee.weathernaut.R
 import me.tangobee.weathernaut.constants.UnitsMapper
@@ -22,6 +23,8 @@ import me.tangobee.weathernaut.services.WeatherMusicService
 import me.tangobee.weathernaut.utils.SharedPreferencesHelper
 import me.tangobee.weathernaut.utils.WeatherHelper
 import me.tangobee.weathernaut.viewmodels.WeatherViewModel
+import java.util.Locale
+
 
 class SettingsFragment : Fragment() {
 
@@ -68,6 +71,7 @@ class SettingsFragment : Fragment() {
         binding.temperatureUnit.setOnClickListener {showTemperatureUnitPopup(binding.temperatureSpinner)}
         binding.windSpeedUnit.setOnClickListener {showWindSpeedUnitPopup(binding.windSpeedSpinner)}
         binding.atmosphericPressureUnit.setOnClickListener {showAtmosphericPressureUnitPopup(binding.atmosphericPressureSpinner)}
+        binding.weatherLanguageWrapper.setOnClickListener{showLanguagePopup(binding.languageSpinner)}
 
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -111,6 +115,7 @@ class SettingsFragment : Fragment() {
         binding.atmosphericPressureSpinner.text = UnitsMapper.getShorthandUnit(settingsModel.pressureUnit)
 
         binding.weatherMusicSwitch.setChecked(settingsModel.isMusicOn)
+        binding.languageSpinner.text=settingsModel.LanguageName
     }
 
     private fun weatherMusicToggle(musicFlag: Boolean) {
@@ -240,6 +245,52 @@ class SettingsFragment : Fragment() {
                     val currentSettings = sharedPreferencesHelper.getSettings()
                     updateWeatherData(currentSettings)
                 }
+            }
+
+            true
+        }
+
+        popup.show()
+    }
+
+    //language update
+    private fun showLanguagePopup(view: View) {
+        val popup = PopupMenu(requireContext(), view)
+        popup.inflate(R.menu.language_menu)
+        popup.setOnMenuItemClickListener { item: MenuItem? ->
+            when (item!!.itemId) {
+                R.id.english -> {
+                    binding.languageSpinner.text = item.title
+                    Locale.setDefault(Locale(""))
+                    val config = Configuration()
+                    config.locale = Locale("")
+                    resources.updateConfiguration(config, resources.displayMetrics)
+                    sharedPreferencesHelper.updateSettings {
+                        it.Language = ""
+                        it.LanguageName= item.title.toString()
+                        it
+                    }
+
+                    val currentSettings = sharedPreferencesHelper.getSettings()
+                    updateWeatherData(currentSettings)
+                }
+                R.id.hindi -> {
+                    binding.languageSpinner.text = item.title
+                    Locale.setDefault(Locale("hi"))
+                    val config = Configuration()
+                    config.locale = Locale("hi")
+                    resources.updateConfiguration(config, resources.displayMetrics)
+
+                    sharedPreferencesHelper.updateSettings {
+                        it.Language = "hi"
+                        it.LanguageName=item.title.toString()
+                        it
+                    }
+
+                    val currentSettings = sharedPreferencesHelper.getSettings()
+                    updateWeatherData(currentSettings)
+                }
+
             }
 
             true
